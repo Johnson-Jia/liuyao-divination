@@ -1,0 +1,26 @@
+[project]
+name = "liuyao-divination"
+version = "0.1.0"
+description = "Liu Yao (六爻) divination: an agent skill + programmatic casting engine"
+readme = "README.md"
+license = {text = "MIT"}
+authors = [{name = "Johnson"}]
+requires-python = ">=3.9"
+keywords = ["liuyao", "iching", "divination", "六爻", "周易", "skill", "claude"]
+
+[project.optional-dependencies]
+dev = ["pytest>=7.0"]
+
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
