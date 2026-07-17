@@ -77,6 +77,25 @@ ln -s "$(pwd)/skill/liuyao-divination" ~/.claude/skills/liuyao-divination
 
 Then ask Claude something like *"占问家人介绍的对象是否旺自己，主卦地泽临九二动变复，辛卯日"* and it will follow the skill's workflow.
 
+### 4. Analyze a new hexagram (full workflow)
+
+Mechanics to the program, reasoning to the LLM — three steps:
+
+```bash
+# ① Scaffold: cast board + fetch hexagram/line texts + emit JSON skeleton + print a reasoning brief
+python tools/new_case.py --hexagram 雷水解 --moving 3 --month 申 --day 甲子 \
+    --question "占求职能否成" --yongshen 官鬼 -o examples/02-求职.json
+
+# ② LLM reasoning: hand the brief to Claude, fill the JSON per SKILL.md's 8-step flow
+#    (overview / sections / verdict / summary) — let the model do the imagery,
+#    six-line analysis, and outcome推演
+
+# ③ Generate report
+python tools/generate_report.py examples/02-求职.json -o outputs/report.html
+```
+
+Casting, text lookup, and key judgments (dark-move / retreating / graveyard / combinations / effective-or-not) are computed exactly by the scaffold; interpretation is the LLM's job. See `references/08-断卦步骤.md`.
+
 ## 🧪 Correctness
 
 The engine is validated against a **canonical hand-analyzed case** (`examples/01-是否旺己-地泽临之复.json`, 地泽临 → 地雷复, 辛卯日). The test suite asserts the engine reproduces every hand-derived result: 妻财亥水 as the Significant Line on line 5, 子孙酉 as a **dark-move** (not a day-break — the key distinction), 世爻丁卯 entering the 未 graveyard and retreating to 庚寅, void at 午未 with no line actually void, and so on.

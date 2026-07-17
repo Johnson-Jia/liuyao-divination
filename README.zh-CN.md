@@ -77,6 +77,25 @@ ln -s "$(pwd)/skill/liuyao-divination" ~/.claude/skills/liuyao-divination
 
 然后对 Claude 说："占问家人介绍的对象是否旺自己，主卦地泽临九二动变复，辛卯日"，它就会按技能流程解读。
 
+### 4. 分析一个新卦（完整流程）
+
+机械层交给程序、推理层交给 LLM，三步走：
+
+```bash
+# ① 脚手架：排盘 + 取卦辞爻辞 + 生成 JSON 骨架 + 打印推理 brief
+python tools/new_case.py --hexagram 雷水解 --moving 3 --month 申 --day 甲子 \
+    --question "占求职能否成" --yongshen 官鬼 -o examples/02-求职.json
+
+# ② LLM 推理：把 brief 交给 Claude，依 SKILL.md 八步流程填充 JSON 的
+#    overview 讲解 / sections 分层解析 / verdict 断语 / summary
+#    （卦象推理、六爻分析、发展推演——充分发挥大模型能力）
+
+# ③ 生成报告
+python tools/generate_report.py examples/02-求职.json -o outputs/report.html
+```
+
+排盘、卦辞、关键判定（暗动 / 化退 / 入墓 / 三合 / 六合卦 / 元忌有力无力…）由脚手架自动算准；推理与断卦由 LLM 发挥。详见 `references/08-断卦步骤.md`。
+
 ## 🧪 正确性
 
 引擎用一个**手工精析的经典卦例**（`examples/01-是否旺己-地泽临之复.json`，地泽临 → 地雷复，辛卯日）来验证。测试断言引擎能复现每一条手工结论：妻财亥水为用神在五爻、子孙酉为**暗动**（而非日破——关键区别）、世爻丁卯入未墓且化退为庚寅、空亡在午未而卦中无落空之爻，等等。
