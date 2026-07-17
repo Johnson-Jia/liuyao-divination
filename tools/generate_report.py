@@ -233,20 +233,18 @@ def render_hex_diagram(board):
                     else '<div class="bars split"><span class="b"></span><span class="b"></span></div>')
             yao_cls = "yao moving" if mv else "yao"
             info = info_of(pos)
-            left_html = f'<span class="yleft">{esc(info["shen"])}·{esc(info["qin"])}</span>'
+            left_html = f'<span class="yleft">{link_terms(esc(info["shen"]) + "·" + esc(info["qin"]))}</span>'
             right_html = f'<span class="yright">{esc(info["gan"])}{esc(info["zhi"])}</span>'
             parts = []
             for t in info.get("tags", []):
                 if t == "世":
-                    cls = "ytag shi"
+                    cls, dt = "ytag shi term", ' data-term="世爻" tabindex="0"'
                 elif t == "应":
-                    cls = "ytag ying"
+                    cls, dt = "ytag ying term", ' data-term="应爻" tabindex="0"'
+                elif t in GLOSSARY:
+                    cls, dt = "ytag term", f' data-term="{t}" tabindex="0"'
                 else:
-                    cls = "ytag"
-                dt = ""
-                if t in GLOSSARY:
-                    cls += " term"
-                    dt = f' data-term="{t}" tabindex="0"'
+                    cls, dt = "ytag", ""
                 parts.append(f'<span class="{cls}"{dt}>{esc(t)}</span>')
             tag_html = "".join(parts)
             rows.append(
