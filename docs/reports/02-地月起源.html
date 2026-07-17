@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>地月起源 · 水火既济 · 初九六二上六动 · 变巽为风</title>
+<style>
+:root{
+  --paper:#f4ead5; --paper-light:#faf4e4;
+  --ink:#2b2218; --ink-soft:#4a3f30; --ink-fade:#6b5d48;
+  --vermilion:#9e2b25; --vermilion-bright:#c0392b;
+  --gold:#a87c2a; --gold-bright:#c9a44c;
+  --jade:#4f6f57; --border:#d4c4a0; --border-strong:#bda672;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:'Noto Serif SC','Songti SC','SimSun',serif;
+  background:radial-gradient(circle at 20% 10%,rgba(168,124,42,.06),transparent 40%),
+             radial-gradient(circle at 80% 90%,rgba(158,43,37,.05),transparent 45%),var(--paper);
+  color:var(--ink);line-height:1.9;font-size:17.5px;padding:40px 20px 60px;
+}
+.wrap{max-width:920px;margin:0 auto}
+.header{text-align:center;padding:50px 30px 40px;background:linear-gradient(180deg,var(--paper-light),var(--paper));
+  border:1px solid var(--border);border-radius:6px;position:relative;overflow:hidden;box-shadow:0 4px 24px rgba(60,40,10,.08)}
+.seal{position:absolute;top:24px;right:30px;width:62px;height:62px;background:var(--vermilion);color:#fff7e8;
+  font-family:'KaiTi',serif;font-size:30px;display:flex;align-items:center;justify-content:center;border-radius:8px;
+  transform:rotate(8deg);box-shadow:0 2px 8px rgba(158,43,37,.4);line-height:1}
+.seal::after{content:"";position:absolute;inset:4px;border:1.5px solid rgba(255,247,232,.5);border-radius:5px}
+.title-sub{font-size:17px;color:var(--vermilion);letter-spacing:4px;margin-bottom:8px;font-weight:600}
+.title-main{font-family:'KaiTi',serif;font-size:42px;color:var(--ink);letter-spacing:6px;margin-bottom:6px}
+.title-main.red{color:var(--vermilion)}
+.divider{display:flex;align-items:center;justify-content:center;gap:14px;margin:18px 0;color:var(--gold)}
+.divider::before,.divider::after{content:"";height:1px;width:90px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+.info-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin:24px 0}
+.header-meta{margin-top:20px;font-size:14.5px;color:var(--ink-soft);letter-spacing:1px;line-height:1.8}
+.header-meta .accent{color:var(--vermilion);font-weight:600}
+.term{cursor:pointer;color:var(--vermilion);border-bottom:1px dashed var(--vermilion)}
+.term:hover{background:rgba(158,43,37,.06)}
+.ytag.term{border-bottom:none}
+.popover{position:fixed;display:none;z-index:9999;max-width:320px;padding:14px 16px;background:#fffdf5;border:1px solid var(--border-strong);border-left:3px solid var(--vermilion);border-radius:6px;box-shadow:0 8px 28px rgba(40,30,15,.2);font-size:14px;line-height:1.75;color:var(--ink-soft)}
+.popover .pop-title{font-family:'KaiTi',serif;font-size:16px;color:var(--vermilion);margin-bottom:6px;letter-spacing:1px;display:flex;justify-content:space-between;align-items:center}
+.popover .pop-close{cursor:pointer;color:var(--ink-fade);font-size:18px;font-weight:400;margin-left:12px}
+.popover .pop-text{color:var(--ink-soft)}
+.info-card{background:var(--paper-light);border:1px solid var(--border);border-left:3px solid var(--gold);border-radius:4px;padding:16px 18px}
+.info-card .label{font-size:13.5px;color:var(--ink-fade);letter-spacing:2px;margin-bottom:6px}
+.info-card .value{font-size:17.5px;color:var(--ink);font-weight:600}
+.info-card .value .accent{color:var(--vermilion)}
+.section{margin:42px 0 20px}
+.section-title{display:flex;align-items:center;gap:14px;margin-bottom:20px}
+.section-title .num{width:34px;height:34px;background:var(--ink);color:var(--paper-light);font-family:'KaiTi',serif;
+  font-size:18px;display:flex;align-items:center;justify-content:center;border-radius:50%;flex-shrink:0}
+.section-title h2{font-family:'KaiTi',serif;font-size:26px;color:var(--ink);letter-spacing:3px;font-weight:400}
+.section-title .line{flex:1;height:1px;background:linear-gradient(90deg,var(--border-strong),transparent)}
+.meta-bar{display:flex;flex-wrap:wrap;justify-content:center;gap:12px 24px;padding:14px 20px;background:var(--paper-light);border:1px solid var(--border);border-left:3px solid var(--gold);border-radius:6px;margin-bottom:16px}
+.meta-item{display:inline-flex;align-items:baseline;gap:7px}
+.meta-k{font-size:12.5px;color:var(--ink-fade);letter-spacing:2px}
+.meta-v{font-size:15.5px;color:var(--ink);font-weight:600}
+.meta-v.accent{color:var(--vermilion)}
+.hex-display{display:flex;align-items:center;justify-content:center;gap:24px;padding:30px 16px;
+  background:var(--paper-light);border:1px solid var(--border);border-radius:6px;margin-bottom:24px;overflow-x:auto}
+.hex-block{text-align:center}
+.hex-mid{display:flex;flex-direction:column;align-items:center;gap:8px;flex-shrink:0;max-width:100px}
+.hex-mid .gua-tags{margin:0;text-align:center}
+.hex-mid .gua-tags .tag{display:block;margin:3px 0;font-size:11px;letter-spacing:1px}
+.gua-name{font-family:'KaiTi',serif;font-size:26px;color:var(--ink);margin-bottom:6px;letter-spacing:2px}
+.gua-tag{font-size:13.5px;color:var(--ink-fade);margin-bottom:16px;letter-spacing:2px}
+.hex-lines{display:flex;flex-direction:column;gap:9px;align-items:center}
+.yao{display:flex;align-items:center;gap:7px;width:368px;min-height:28px}
+.yao .yleft{font-size:13px;color:var(--ink-soft);width:80px;text-align:right;flex-shrink:0;white-space:nowrap}
+.yao .pos{font-size:13px;color:var(--ink-fade);width:28px;text-align:center;flex-shrink:0}
+.yao .bars{width:64px;display:flex;justify-content:space-between;align-items:center;height:10px;flex-shrink:0}
+.yao .bars .b{height:10px;background:var(--ink);border-radius:1px}
+.yao .bars.solid .b{width:64px}
+.yao .bars.split .b{width:30px}
+.yao .yright{font-size:14px;color:var(--ink);width:44px;flex-shrink:0;white-space:nowrap;font-weight:600}
+.yao .ytags{width:124px;display:flex;flex-wrap:wrap;gap:2px;align-items:center}
+.yao .ytag{font-size:10.5px;padding:1px 5px;border-radius:2px;background:rgba(158,43,37,.1);color:var(--vermilion);white-space:nowrap;line-height:1.4}
+.yao .ytag.shi{background:var(--ink);color:var(--paper-light);font-weight:600}
+.yao .ytag.ying{background:var(--gold);color:#fff7e8;font-weight:600}
+.yao.moving .b{background:var(--vermilion);box-shadow:0 0 8px rgba(158,43,37,.4)}
+.yao.moving .pos{color:var(--vermilion);font-weight:600}
+.arrow{font-size:34px;color:var(--gold)}
+.board{background:var(--paper-light);border:1px solid var(--border-strong);border-radius:6px;overflow:hidden;box-shadow:0 2px 12px rgba(60,40,10,.06)}
+.board table{width:100%;border-collapse:collapse;font-size:14.5px}
+.board th{background:var(--ink);color:var(--paper-light);padding:12px 8px;font-weight:600;letter-spacing:2px;font-size:13px}
+.board td{padding:13px 8px;text-align:center;border-bottom:1px solid var(--border)}
+.board tr:last-child td{border-bottom:none}
+.board tr:nth-child(even) td{background:rgba(168,124,42,.04)}
+.board tr.moving td{background:rgba(158,43,37,.07)}
+.board .ys{color:var(--vermilion);font-weight:700}
+.board .sy{font-weight:700}
+.tag{display:inline-block;font-size:11.5px;padding:2px 7px;border-radius:3px;margin:1px;letter-spacing:1px}
+.tag-red{background:rgba(158,43,37,.12);color:var(--vermilion)}
+.tag-jade{background:rgba(79,111,87,.12);color:var(--jade)}
+.tag-gold{background:rgba(168,124,42,.15);color:var(--gold)}
+.params{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:20px 0}
+.param{background:var(--paper-light);border:1px solid var(--border);border-radius:4px;padding:12px 14px;text-align:center}
+.param .k{font-size:12.5px;color:var(--ink-fade);letter-spacing:2px;margin-bottom:4px}
+.param .v{font-size:15.5px;color:var(--ink);font-weight:600}
+.param .v.red{color:var(--vermilion)}
+.card{background:var(--paper-light);border:1px solid var(--border);border-radius:6px;padding:22px 26px;margin-bottom:16px}
+.card .ct{font-family:'KaiTi',serif;font-size:22.5px;color:var(--ink);margin-bottom:4px;letter-spacing:2px}
+.card .cs{font-size:14.5px;color:var(--vermilion);margin-bottom:12px;letter-spacing:1px;font-weight:600}
+.card p{color:var(--ink-soft);margin-bottom:10px;text-align:justify}
+.card p:last-child{margin-bottom:0}
+.ci-block{background:var(--paper-light);border:1px solid var(--border);border-radius:6px;padding:16px 20px;margin-bottom:14px}
+.ci-cap{font-family:'KaiTi',serif;font-size:17.5px;color:var(--vermilion);letter-spacing:6px;margin-bottom:12px;text-align:center}
+.ci-item{padding:10px 0;border-bottom:1px dashed var(--border)}
+.ci-item:last-child{border-bottom:none}
+.ci-label{font-size:14.5px;color:var(--ink-fade);margin-bottom:5px;letter-spacing:1px}
+.ci-text{font-family:'KaiTi','STKaiti',serif;font-size:18.5px;color:var(--ink);margin-bottom:6px;letter-spacing:1px;line-height:1.7}
+.ci-note{font-size:15px;color:var(--ink-soft);line-height:1.85}
+.gua-tags{text-align:center;margin:-6px 0 20px}
+.gua-tags .tag{font-size:13px;padding:3px 10px}
+.mini-table{width:100%;border-collapse:collapse;margin:10px 0;font-size:14px}
+.mini-table td{padding:8px 10px;border-bottom:1px dashed var(--border);vertical-align:top}
+.mini-table td:first-child{color:var(--vermilion);font-weight:600;white-space:nowrap}
+.verdict{background:linear-gradient(180deg,#3a2f22,#2b2218);border:2px solid var(--gold);border-radius:8px;
+  padding:40px 38px;margin:30px 0;color:#f0e6d0;box-shadow:0 8px 30px rgba(40,30,15,.25)}
+.verdict-title{text-align:center;font-family:'KaiTi',serif;font-size:30px;color:var(--gold-bright);letter-spacing:10px;margin-bottom:28px}
+.verdict-body{font-size:17.5px;line-height:2.1;color:#e8dcc2;text-indent:2em;text-align:justify}
+.verdict-body p{margin-bottom:14px}
+.verdict-body p:last-child{margin-bottom:0}
+.summary{background:linear-gradient(135deg,rgba(158,43,37,.06),rgba(168,124,42,.06));border:1.5px solid var(--vermilion);
+  border-radius:6px;padding:28px 30px;margin:30px 0}
+.summary h3{font-family:'KaiTi',serif;font-size:24px;color:var(--vermilion);margin-bottom:12px;letter-spacing:2px}
+.summary p{color:var(--ink);font-size:17.5px;line-height:2}
+.notice{text-align:center;font-size:14.5px;color:var(--ink-fade);border-top:1px dashed var(--border);padding-top:22px;margin-top:30px;line-height:1.9}
+.footer{text-align:center;margin-top:30px;font-size:12px;color:var(--ink-fade);letter-spacing:2px}
+.footer .orn{color:var(--gold);margin:0 8px}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+.header,.hex-display,.board,.card,.verdict,.summary{animation:fadeUp .7s ease both}
+@media(max-width:600px){body{padding:20px 12px 40px}.title-main{font-size:32px}.board{overflow-x:auto}.board table{min-width:560px}}
+</style></head><body><div class="wrap">
+
+<header class="header">
+  <div class="seal">卦</div>
+  <div class="title-sub">六爻卦象解析</div>
+  <h1 class="title-main">水火既济</h1>
+  <div class="divider"><span>✦</span><span>九二爻动 · 变</span><span>✦</span></div>
+  <h1 class="title-main red">巽为风</h1>
+  <div class="header-meta">丙午年 · 乙未月 · <span class="accent">壬辰日</span>　｜　地球与月球曾是一体或相连吗</div>
+</header>
+
+<div class="section">
+  <div class="section-title"><div class="num">壹</div><h2>卦象总览</h2><div class="line"></div></div>
+  <div class="meta-bar"><span class="meta-item"><span class="meta-k">月建</span><span class="meta-v">未·土</span></span><span class="meta-item"><span class="meta-k">日辰</span><span class="meta-v">壬辰·土</span></span><span class="meta-item"><span class="meta-k">旬空</span><span class="meta-v">午、未</span></span><span class="meta-item"><span class="meta-k">用神</span><span class="meta-v accent">父母（六四·戊申）</span></span></div>
+  <div class="hex-display"><div class="hex-block"><div class="gua-name">水火既济</div><div class="gua-tag">主卦 · 坎宫·水</div><div class="hex-lines"><div class="yao moving"><span class="yleft"><span class="term" data-term="白虎" tabindex="0">白虎</span>·<span class="term" data-term="兄弟" tabindex="0">兄弟</span></span><span class="pos">上六</span><div class="bars split"><span class="b"></span><span class="b"></span></div><span class="yright">戊子</span><span class="ytags"><span class="ytag ying term" data-term="应爻" tabindex="0">应</span><span class="ytag">动</span><span class="ytag term" data-term="化他" tabindex="0">化他</span><span class="ytag term" data-term="日墓" tabindex="0">日墓</span></span></div><div class="yao"><span class="yleft"><span class="term" data-term="螣蛇" tabindex="0">螣蛇</span>·<span class="term" data-term="官鬼" tabindex="0">官鬼</span></span><span class="pos">九五</span><div class="bars solid"><span class="b"></span></div><span class="yright">戊戌</span><span class="ytags"><span class="ytag term" data-term="暗动" tabindex="0">暗动</span><span class="ytag term" data-term="日墓" tabindex="0">日墓</span></span></div><div class="yao"><span class="yleft"><span class="term" data-term="勾陈" tabindex="0">勾陈</span>·<span class="term" data-term="父母" tabindex="0">父母</span></span><span class="pos">六四</span><div class="bars split"><span class="b"></span><span class="b"></span></div><span class="yright">戊申</span><span class="ytags"><span class="ytag term" data-term="动爻墓" tabindex="0">动爻墓</span></span></div><div class="yao"><span class="yleft"><span class="term" data-term="朱雀" tabindex="0">朱雀</span>·<span class="term" data-term="兄弟" tabindex="0">兄弟</span></span><span class="pos">九三</span><div class="bars solid"><span class="b"></span></div><span class="yright">己亥</span><span class="ytags"><span class="ytag shi term" data-term="世爻" tabindex="0">世</span><span class="ytag term" data-term="日墓" tabindex="0">日墓</span></span></div><div class="yao moving"><span class="yleft"><span class="term" data-term="青龙" tabindex="0">青龙</span>·<span class="term" data-term="官鬼" tabindex="0">官鬼</span></span><span class="pos">六二</span><div class="bars split"><span class="b"></span><span class="b"></span></div><span class="yright">己丑</span><span class="ytags"><span class="ytag">动</span><span class="ytag term" data-term="月破" tabindex="0">月破</span><span class="ytag term" data-term="化他" tabindex="0">化他</span><span class="ytag term" data-term="日墓" tabindex="0">日墓</span></span></div><div class="yao moving"><span class="yleft"><span class="term" data-term="玄武" tabindex="0">玄武</span>·<span class="term" data-term="子孙" tabindex="0">子孙</span></span><span class="pos">初九</span><div class="bars solid"><span class="b"></span></div><span class="yright">己卯</span><span class="ytags"><span class="ytag">动</span><span class="ytag term" data-term="化他" tabindex="0">化他</span><span class="ytag term" data-term="月墓" tabindex="0">月墓</span><span class="ytag term" data-term="空墓" tabindex="0">空墓</span></span></div></div></div><div class="hex-mid"><div class="arrow">➜</div><div class="gua-tags"><span class="tag tag-red">变卦·六冲卦</span><span class="tag tag-gold">主生变(泄)</span></div></div><div class="hex-block"><div class="gua-name">巽为风（六冲卦）</div><div class="gua-tag">变卦 · 巽宫·木</div><div class="hex-lines"><div class="yao moving"><span class="yleft"><span class="term" data-term="白虎" tabindex="0">白虎</span>·<span class="term" data-term="子孙" tabindex="0">子孙</span></span><span class="pos">上九</span><div class="bars solid"><span class="b"></span></div><span class="yright">辛卯</span><span class="ytags"><span class="ytag term" data-term="化他" tabindex="0">化他</span></span></div><div class="yao"><span class="yleft"><span class="term" data-term="螣蛇" tabindex="0">螣蛇</span>·<span class="term" data-term="妻财" tabindex="0">妻财</span></span><span class="pos">九五</span><div class="bars solid"><span class="b"></span></div><span class="yright">辛巳</span><span class="ytags"></span></div><div class="yao"><span class="yleft"><span class="term" data-term="勾陈" tabindex="0">勾陈</span>·<span class="term" data-term="官鬼" tabindex="0">官鬼</span></span><span class="pos">六四</span><div class="bars split"><span class="b"></span><span class="b"></span></div><span class="yright">辛未</span><span class="ytags"></span></div><div class="yao"><span class="yleft"><span class="term" data-term="朱雀" tabindex="0">朱雀</span>·<span class="term" data-term="父母" tabindex="0">父母</span></span><span class="pos">九三</span><div class="bars solid"><span class="b"></span></div><span class="yright">辛酉</span><span class="ytags"></span></div><div class="yao moving"><span class="yleft"><span class="term" data-term="青龙" tabindex="0">青龙</span>·<span class="term" data-term="兄弟" tabindex="0">兄弟</span></span><span class="pos">九二</span><div class="bars solid"><span class="b"></span></div><span class="yright">辛亥</span><span class="ytags"><span class="ytag term" data-term="化他" tabindex="0">化他</span></span></div><div class="yao moving"><span class="yleft"><span class="term" data-term="玄武" tabindex="0">玄武</span>·<span class="term" data-term="官鬼" tabindex="0">官鬼</span></span><span class="pos">初六</span><div class="bars split"><span class="b"></span><span class="b"></span></div><span class="yright">辛丑</span><span class="ytags"><span class="ytag term" data-term="化他" tabindex="0">化他</span></span></div></div></div></div>
+  <div class="ci-block"><div class="ci-cap">卦　辞</div><div class="ci-item"><div class="ci-label">主卦 · 水火既济</div><div class="ci-text">亨小，利贞，初吉，终乱。</div><div class="ci-note">既济，水火交济、已成之象。然「初吉终乱」——初（起源）吉、终（后来）乱，象先合后散。</div></div><div class="ci-item"><div class="ci-label">变卦 · 巽为风</div><div class="ci-text">小亨。利有攸往，利见大人。</div><div class="ci-note">巽为风，八纯<span class="term" data-term="六冲卦" tabindex="0">六冲卦</span>，主顺、入、散。由交济相连变为散开。</div></div></div><div class="ci-block"><div class="ci-cap">动爻爻辞</div><div class="ci-item"><div class="ci-label">动爻 · 既济 初九</div><div class="ci-text">初九：曳其轮，濡其尾，无咎。</div><div class="ci-note">初爻为根基、起源。曳轮濡尾，起源处有所牵拽沾濡（变动之初），无咎。</div></div><div class="ci-item"><div class="ci-label">动爻 · 既济 六二</div><div class="ci-text">六二：妇丧其茀，勿逐，七日得。</div><div class="ci-note">丧茀勿逐，七日复得——有所失离而终将复合，象分离之后尚有归聚之机。</div></div><div class="ci-item"><div class="ci-label">动爻 · 既济 上六</div><div class="ci-text">上六：濡其首，厉。</div><div class="ci-note">上爻为天位、终端。濡首厉——终端处涉险，象分离过程之剧烈。</div></div></div><div class="card"><div class="ct">卦象推演</div><p>水火既济，上坎下离，水在火上、水火相交，二气交济而六爻阴阳各正其位——为「已成、交济、合为一体」之象，象喻远古地球与月球（或其前身）曾相交相连、合为一体。然既济变巽为风（八纯六冲卦），巽主风、散，由「交济相连」变为「散开分离」。故卦象寓意：地月曾为一体（既济之交济），后经变动散开分离（巽之散），由合到散。既济卦辞「初吉终乱」正合此意——起源一体为吉，后来分离为乱。</p></div><div class="card"><div class="ct">动爻推演</div><p>三爻齐动（初九、六二、上六），动象集中于初（根基/起源）与上（天位/终端），正应「起源处与远端皆经变动」。要害在应爻：应爻上六（戊子水）代表所问之月球，居上爻天位而发动，化为子孙辛卯——子孙为「我所生、派生之物」，应化子孙即「月球由（地球）生出、派生分离而来」，象月球从地球分裂或碰撞产生。又世爻九三（己亥水）与应爻（戊子水）同属水——世应同源，地球与月球同源同质。世应皆水而应动化分离，强烈象喻「曾同源一体、后分离」。</p></div>
+</div>
+
+<div class="section">
+  <div class="section-title"><div class="num">贰</div><h2>分层解析</h2><div class="line"></div></div>
+  <div class="card"><div class="ct">卦象 · 既济交济 → 巽散</div><div class="cs">曾为一体 — 后分离</div><p>主卦水火既济，上坎下离，水在火上、水火相交，六爻阴阳各正其位，为「相交相连、合为一体」之成象——象喻地月曾相交相连、合为一体。</p><p>变卦巽为风，八纯<span class="term" data-term="六冲卦" tabindex="0">六冲卦</span>，主散。既济（交济相连）变巽（散），由合到散；又既济卦辞「初吉终乱」，起源一体为吉、后来分离为乱。卦象整体寓意：地月曾为一体，后经变动散开分离。</p></div><div class="card"><div class="ct">世应同源 · 皆属水</div><div class="cs">地球与月球 — 同源同质</div><p><span class="term" data-term="世爻" tabindex="0">世爻</span>九三己亥水代表地球（问方），<span class="term" data-term="应爻" tabindex="0">应爻</span>上六戊子水代表月球（所问对象）。世应同属水——同源同质。</p><p>五行同源，象地球与月球本出一源、材质相通。这与现代「地月同源」的化学证据（月岩与地幔同位素高度相似）在意象上暗合。</p></div><div class="card"><div class="ct">应爻化子孙 · 月球被生出</div><div class="cs">月球源自地球 — 分裂/碰撞派生</div><p><span class="term" data-term="应爻" tabindex="0">应爻</span>（月球）居上六天位而发动，化为<span class="term" data-term="子孙" tabindex="0">子孙</span>辛卯。<span class="term" data-term="子孙" tabindex="0">子孙</span>为「我所生、派生之物」——应动化<span class="term" data-term="子孙" tabindex="0">子孙</span>，即月球是由地球生出、派生分离而来，而非外来俘获。</p><p>此象与「大碰撞假说」（月球由地球与忒伊亚天体碰撞、从地球物质分裂形成）之意象高度吻合：月球为地球所派生。</p></div><div class="card"><div class="ct">动爻 · 初上齐动</div><div class="cs">起源与终端 — 皆有变动</div><p>三爻齐动集中于初（起源根基）与上（天位终端）：初九「曳其轮」（起源处牵拽变动）、上六「濡其首厉」（终端处涉险剧烈），象分离过程自起源处发动、至终端处剧烈。</p><p>六二「丧茀七日得」夹于其间，象分离中有所失离、又有归聚之机。整体动象：一场自起源至终端的剧烈变动（碰撞/分裂）。</p></div><div class="card"><div class="ct">卦辞印证 · 初吉终乱</div><div class="cs">先合后散 — 古经文与象一致</div><p>既济卦辞「亨小，利贞，初吉，终乱」——初（起源）吉、终（后来）乱。象先合后散，与卦象（既济交济→巽散）、动象（应化<span class="term" data-term="子孙" tabindex="0">子孙</span>分离）三者一致，皆指向「曾一体、后分离」。</p><p><span class="term" data-term="三合" tabindex="0">三合</span>局（申子辰水局等）多处虚合待用，象「水气同源聚拢之意在，但未成实局」——同源之象有，稳固一体则非长久。</p></div><div class="card"><div class="ct">理性边界</div><div class="cs">象参非实证</div><p>六爻本为占人事吉凶之术，占宇宙起源已越其常轨。此卦乃「以象参证」，非科学定论。</p><p>地月起源之真相，当以天体物理与月岩同位素证据为准。卦象与大碰撞假说之吻合，或为巧合，或为古人取象之妙，聊备一格，未可执为实证。</p></div>
+</div>
+
+<div class="section">
+  <div class="section-title"><div class="num">叁</div><h2>整体推演 · 断语</h2><div class="line"></div></div>
+  <div class="verdict"><div class="verdict-title">断　曰</div><div class="verdict-body"><p>所占乃天地之问：地球与月球曾是一体或相连否。卦得坎宫水火既济，初九、六二、上六三爻齐动，变巽为风。</p><p>以象论之，此卦强烈暗示地月曾为一体、后分离。</p><p>其一，主卦既济。上坎下离，水在火上，水火交济，六爻阴阳各正其位，为「相交相连、合为一体」之成象——象喻远古地球与月球（或其前身）曾相交相连、合为一体。</p><p>其二，世应同源。<span class="term" data-term="世爻" tabindex="0">世爻</span>九三己亥水（地球方），<span class="term" data-term="应爻" tabindex="0">应爻</span>上六戊子水（月球方），世应同属水——同源同质，象地月本出一源。</p><p>其三，应化<span class="term" data-term="子孙" tabindex="0">子孙</span>。<span class="term" data-term="应爻" tabindex="0">应爻</span>（月球）居上爻天位而发动，化为<span class="term" data-term="子孙" tabindex="0">子孙</span>辛卯。<span class="term" data-term="子孙" tabindex="0">子孙</span>为「我所生、派生之物」，应动化<span class="term" data-term="子孙" tabindex="0">子孙</span>，即月球由地球生出、派生分离而来——象月球从地球分裂或碰撞产生，而非外来俘获。</p><p>其四，既济变巽。既济（交济相连）变巽为风（八纯<span class="term" data-term="六冲卦" tabindex="0">六冲卦</span>，主散），由「合」到「散」；既济卦辞「初吉终乱」亦合「起源一体为吉、后来分离为乱」之意。三爻齐动集中于初（起源根基）与上（天位终端），正应「起源处与远端皆经变动」。</p><p>统观之，卦象与今之「大碰撞假说」（月球由地球与忒伊亚碰撞、从地球物质分裂而成）之意象高度吻合：地月曾相连一体，后经剧烈变动（碰撞/分裂）散开成二，月球为地球所派生。</p><p>然须明言：六爻本为占人事吉凶之术，占宇宙起源已越其常轨，此乃「以象参证」，非科学定论。地月起源之真相，当以天体物理与月岩同位素证据为准。卦象之吻合，或为巧合，或为古人取象之妙，聊备一格，未可执为实证。</p></div></div>
+</div>
+
+<div class="summary">
+  <h3>一语总括</h3>
+  <p>象参支持地月曾一体后分离：既济（水火交济、合为一体）→巽为风（散）；世应同属水（同源同质）；<span class="term" data-term="应爻" tabindex="0">应爻</span>（月球）动化<span class="term" data-term="子孙" tabindex="0">子孙</span>（由地球生出派生）——与「大碰撞假说」意象高度吻合。然六爻非科学，占宇宙起源仅作象参，真相以天体物理证据为准。</p>
+</div>
+
+<div class="notice">※ 理性提醒 ※<br>六爻为传统文化与占卜术，非科学。本卦为非常规占问（宇宙起源），断的是「象」非事实预测。地月起源之真相须以天体物理与月岩同位素证据为准，占卜结果仅作文化象参。</div>
+
+<div class="footer">六爻卦象解析报告<span class="orn">✦</span>水火既济 · 初九六二上六动 · 变巽为风<span class="orn">✦</span>仅供参考</div>
+
+<div id="termPop" class="popover"></div>
+<script>const GLOSSARY={"暗动": "静爻被日辰冲，若该爻旺相则为「暗动」——被激发而暗中发力、有用；若休囚则为日破（冲散无用）。", "月破": "月建所冲之爻。一月之内衰败、无用，过月即复。忌神月破为吉（阻力被破），用神月破为凶。", "日破": "休囚衰弱之静爻被日辰冲，冲散无用。与暗动相对：旺相逢冲为暗动，休囚逢冲为日破。", "空亡": "即旬空。以日辰查所在旬空的两个地支，空亡之爻旺不为真空、衰则为空。日月建本身不以空论。", "旬空": "即空亡。甲子旬空戌亥、甲申旬空午未……空亡之爻待填实或冲日方有用。", "真空": "空亡之爻恰为当季死地：春土、夏金、秋木、冬火为真空，到底全空；四季月（辰戌丑未）无真空。", "化进神": "动爻化为同五行的前进地支（如寅→卯、巳→午），主增益、前进、壮大。", "化退神": "动爻化为同五行的后退地支（如卯→寅、午→巳），主减退、退缩、衰减。", "化回头生": "动爻变出之爻回头生扶动爻本身（变爻生动爻），力量增强，吉。", "化回头克": "动爻变出之爻回头克制动爻本身（变爻克动爻），力量受损，凶。", "入墓": "爻入五行墓库（木墓未、火墓戌、金墓丑、水墓辰），主困束、暂不出头、力量被封存，待冲方出。", "月墓": "爻入月建之墓库（月建地支恰为该爻五行墓库），主月内困束。", "空墓": "所入之墓库恰落旬空，墓不牢，困束是虚的、易脱，非死局。", "三合": "三支合局：申子辰水、亥卯未木、寅午戌火、巳酉丑金。须三爻齐动方成实局，合力大、专一；单动借日月只算虚合待用。", "六合卦": "一卦之初四、二五、三上三对皆地支六合，主和合、聚拢、持久；占姻缘见合为吉。", "六冲卦": "一卦之初四、二五、三上三对皆相冲，主散、变动、反复；占吉事不宜。", "反吟": "卦变而呈相冲相克之象（动爻化回头冲），主反复动荡：成而败、得而失、来而去。", "伏吟": "卦变而六爻地支五行不变，主停滞忧郁、呻吟不伸，用神旺则冲开可解。", "卦变生克": "主卦宫五行与变卦宫五行的生克：变生/比和为吉，变克主卦为大凶。", "用神": "所占之事对应的六亲爻，是全卦核心，取错则全错。如男占姻缘以妻财为用。", "元神": "生用神之爻（生我者），生扶用神。须有力方能生；休囚月破化退则「见生不生」。", "忌神": "克用神之爻（克我者）。须有力方能克害；休囚月破化退则「虽动不克」，化凶为吉。", "仇神": "克元神、生忌神之爻，间接害用（制元、助忌）。", "持世": "某六亲临世爻（求测者自身），如官鬼持世主忧虑负担，子孙持世主无忧。", "官鬼": "六亲之一，主忧虑、压力、功名、工作、疾病；女占以官鬼为夫。", "妻财": "六亲之一，主钱财、财物；男占以妻财为妻/女友。", "子孙": "六亲之一，为福德之神、制官鬼解忧、主医药、子女。", "父母": "六亲之一，主文书、长辈、辛劳、房屋、车马。", "兄弟": "六亲之一，主竞争、劫财、阻隔、同辈。", "青龙": "六神之一（甲乙日起），主喜庆、桃花、文书、财喜、正义。", "朱雀": "六神之一（丙丁日起），主口舌、是非、消息、文书、通信。", "勾陈": "六神之一（戊日起），主拖延、牵缠、旧事、田土、纠缠。", "螣蛇": "六神之一（己日起），主虚惊、怪异、梦寐、纠缠、惊恐。", "白虎": "六神之一（庚辛日起），主血光、丧服、疾病、刚猛、凶险。", "玄武": "六神之一（壬癸日起），主暗昧、隐私、欺骗、盗贼、桃花暗情。", "纳甲": "给六爻配天干地支之法（乾纳甲壬、坤纳乙癸……），是装卦基础。", "临日建": "爻之地支与日辰相同，旺相之极，逢冲克不破（单克单冲）；但月建+动爻群克仍破。", "临月建": "爻之地支与月建相同，当月之内逢克不伤、逢冲不破。", "世爻": "代表求测者自身（或所测主体），是断卦的「我」。", "应爻": "代表对方、所测之人或事，与世爻相对。", "帝旺": "十二长生中力量最旺的阶段（如木帝旺于卯），爻临帝旺为强旺。", "贵而暂弱": "用神临五爻君位为「贵」（地位尊显），但受月日制压为「弱」（能量不足）——贵不等于旺。", "化比和": "动爻变出之爻与动爻同五行、但非进退神，力量维持、无明显增减。", "化他": "动爻变出之爻与动爻不同五行、且非回头生克——为动爻生变爻（化泄，力量外泄）或动爻克变爻（化制，费力），均使动爻减损。", "化墓": "动爻变出之爻恰为本身墓库（自化墓），主变化落入收藏、暂不能落实，待冲墓方出。", "日墓": "爻入日辰之墓（日支为该爻五行墓库），主当日困束、暂不出头。", "动爻墓": "卦中动爻之地支为某爻之墓库，该爻被动爻收藏困束，待冲墓方出。", "动而愈动": "动爻被日辰冲且本身旺相，愈冲愈动、力量激增，主事愈动愈成。", "动而冲散": "动爻被日辰冲且本身衰弱，被冲散、力量溃散，主事动而败散。"};</script>
+<script>
+document.addEventListener('click', function(e){
+  var pop = document.getElementById('termPop');
+  if(e.target.classList.contains('pop-close')){ pop.style.display='none'; return; }
+  var t = e.target.closest('.term');
+  if(t && t.dataset.term){
+    e.stopPropagation();
+    var key = t.dataset.term, text = GLOSSARY[key];
+    if(!text) return;
+    pop.innerHTML = '<div class="pop-title">' + key + '<span class="pop-close">×</span></div><div class="pop-text">' + text + '</div>';
+    pop.style.display = 'block';
+    var rect = t.getBoundingClientRect();
+    var w = pop.offsetWidth, h = pop.offsetHeight;
+    var left = Math.min(rect.left, window.innerWidth - w - 16);
+    var top = rect.bottom + 8;
+    if(top + h > window.innerHeight - 8) top = rect.top - h - 8;
+    pop.style.left = Math.max(8, left) + 'px';
+    pop.style.top = Math.max(8, top) + 'px';
+  } else if(!pop.contains(e.target)){
+    pop.style.display = 'none';
+  }
+});
+document.addEventListener('keydown', function(e){ if(e.key==='Escape') document.getElementById('termPop').style.display='none'; });
+</script>
+
+</div></body></html>

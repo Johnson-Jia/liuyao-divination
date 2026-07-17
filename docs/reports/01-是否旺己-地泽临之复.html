@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>是否旺己 · 地泽临 · 九二爻动 · 变地雷复</title>
+<style>
+:root{
+  --paper:#f4ead5; --paper-light:#faf4e4;
+  --ink:#2b2218; --ink-soft:#4a3f30; --ink-fade:#6b5d48;
+  --vermilion:#9e2b25; --vermilion-bright:#c0392b;
+  --gold:#a87c2a; --gold-bright:#c9a44c;
+  --jade:#4f6f57; --border:#d4c4a0; --border-strong:#bda672;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:'Noto Serif SC','Songti SC','SimSun',serif;
+  background:radial-gradient(circle at 20% 10%,rgba(168,124,42,.06),transparent 40%),
+             radial-gradient(circle at 80% 90%,rgba(158,43,37,.05),transparent 45%),var(--paper);
+  color:var(--ink);line-height:1.9;font-size:17.5px;padding:40px 20px 60px;
+}
+.wrap{max-width:920px;margin:0 auto}
+.header{text-align:center;padding:50px 30px 40px;background:linear-gradient(180deg,var(--paper-light),var(--paper));
+  border:1px solid var(--border);border-radius:6px;position:relative;overflow:hidden;box-shadow:0 4px 24px rgba(60,40,10,.08)}
+.seal{position:absolute;top:24px;right:30px;width:62px;height:62px;background:var(--vermilion);color:#fff7e8;
+  font-family:'KaiTi',serif;font-size:30px;display:flex;align-items:center;justify-content:center;border-radius:8px;
+  transform:rotate(8deg);box-shadow:0 2px 8px rgba(158,43,37,.4);line-height:1}
+.seal::after{content:"";position:absolute;inset:4px;border:1.5px solid rgba(255,247,232,.5);border-radius:5px}
+.title-sub{font-size:17px;color:var(--vermilion);letter-spacing:4px;margin-bottom:8px;font-weight:600}
+.title-main{font-family:'KaiTi',serif;font-size:42px;color:var(--ink);letter-spacing:6px;margin-bottom:6px}
+.title-main.red{color:var(--vermilion)}
+.divider{display:flex;align-items:center;justify-content:center;gap:14px;margin:18px 0;color:var(--gold)}
+.divider::before,.divider::after{content:"";height:1px;width:90px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+.info-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin:24px 0}
+.header-meta{margin-top:20px;font-size:14.5px;color:var(--ink-soft);letter-spacing:1px;line-height:1.8}
+.header-meta .accent{color:var(--vermilion);font-weight:600}
+.term{cursor:pointer;color:var(--vermilion);border-bottom:1px dashed var(--vermilion)}
+.term:hover{background:rgba(158,43,37,.06)}
+.ytag.term{border-bottom:none}
+.popover{position:fixed;display:none;z-index:9999;max-width:320px;padding:14px 16px;background:#fffdf5;border:1px solid var(--border-strong);border-left:3px solid var(--vermilion);border-radius:6px;box-shadow:0 8px 28px rgba(40,30,15,.2);font-size:14px;line-height:1.75;color:var(--ink-soft)}
+.popover .pop-title{font-family:'KaiTi',serif;font-size:16px;color:var(--vermilion);margin-bottom:6px;letter-spacing:1px;display:flex;justify-content:space-between;align-items:center}
+.popover .pop-close{cursor:pointer;color:var(--ink-fade);font-size:18px;font-weight:400;margin-left:12px}
+.popover .pop-text{color:var(--ink-soft)}
+.info-card{background:var(--paper-light);border:1px solid var(--border);border-left:3px solid var(--gold);border-radius:4px;padding:16px 18px}
+.info-card .label{font-size:13.5px;color:var(--ink-fade);letter-spacing:2px;margin-bottom:6px}
+.info-card .value{font-size:17.5px;color:var(--ink);font-weight:600}
+.info-card .value .accent{color:var(--vermilion)}
+.section{margin:42px 0 20px}
+.section-title{display:flex;align-items:center;gap:14px;margin-bottom:20px}
+.section-title .num{width:34px;height:34px;background:var(--ink);color:var(--paper-light);font-family:'KaiTi',serif;
+  font-size:18px;display:flex;align-items:center;justify-content:center;border-radius:50%;flex-shrink:0}
+.section-title h2{font-family:'KaiTi',serif;font-size:26px;color:var(--ink);letter-spacing:3px;font-weight:400}
+.section-title .line{flex:1;height:1px;background:linear-gradient(90deg,var(--border-strong),transparent)}
+.meta-bar{display:flex;flex-wrap:wrap;justify-content:center;gap:12px 24px;padding:14px 20px;background:var(--paper-light);border:1px solid var(--border);border-left:3px solid var(--gold);border-radius:6px;margin-bottom:16px}
+.meta-item{display:inline-flex;align-items:baseline;gap:7px}
+.meta-k{font-size:12.5px;color:var(--ink-fade);letter-spacing:2px}
+.meta-v{font-size:15.5px;color:var(--ink);font-weight:600}
+.meta-v.accent{color:var(--vermilion)}
+.hex-display{display:flex;align-items:center;justify-content:center;gap:24px;padding:30px 16px;
+  background:var(--paper-light);border:1px solid var(--border);border-radius:6px;margin-bottom:24px;overflow-x:auto}
+.hex-block{text-align:center}
+.hex-mid{display:flex;flex-direction:column;align-items:center;gap:8px;flex-shrink:0;max-width:100px}
+.hex-mid .gua-tags{margin:0;text-align:center}
+.hex-mid .gua-tags .tag{display:block;margin:3px 0;font-size:11px;letter-spacing:1px}
+.gua-name{font-family:'KaiTi',serif;font-size:26px;color:var(--ink);margin-bottom:6px;letter-spacing:2px}
+.gua-tag{font-size:13.5px;color:var(--ink-fade);margin-bottom:16px;letter-spacing:2px}
+.hex-lines{display:flex;flex-direction:column;gap:9px;align-items:center}
+.yao{display:flex;align-items:center;gap:7px;width:368px;min-height:28px}
+.yao .yleft{font-size:13px;color:var(--ink-soft);width:80px;text-align:right;flex-shrink:0;white-space:nowrap}
+.yao .pos{font-size:13px;color:var(--ink-fade);width:28px;text-align:center;flex-shrink:0}
+.yao .bars{width:64px;display:flex;justify-content:space-between;align-items:center;height:10px;flex-shrink:0}
+.yao .bars .b{height:10px;background:var(--ink);border-radius:1px}
+.yao .bars.solid .b{width:64px}
+.yao .bars.split .b{width:30px}
+.yao .yright{font-size:14px;color:var(--ink);width:44px;flex-shrink:0;white-space:nowrap;font-weight:600}
+.yao .ytags{width:124px;display:flex;flex-wrap:wrap;gap:2px;align-items:center}
+.yao .ytag{font-size:10.5px;padding:1px 5px;border-radius:2px;background:rgba(158,43,37,.1);color:var(--vermilion);white-space:nowrap;line-height:1.4}
+.yao .ytag.shi{background:var(--ink);color:var(--paper-light);font-weight:600}
+.yao .ytag.ying{background:var(--gold);color:#fff7e8;font-weight:600}
+.yao.moving .b{background:var(--vermilion);box-shadow:0 0 8px rgba(158,43,37,.4)}
+.yao.moving .pos{color:var(--vermilion);font-weight:600}
+.arrow{font-size:34px;color:var(--gold)}
+.board{background:var(--paper-light);border:1px solid var(--border-strong);border-radius:6px;overflow:hidden;box-shadow:0 2px 12px rgba(60,40,10,.06)}
+.board table{width:100%;border-collapse:collapse;font-size:14.5px}
+.board th{background:var(--ink);color:var(--paper-light);padding:12px 8px;font-weight:600;letter-spacing:2px;font-size:13px}
+.board td{padding:13px 8px;text-align:center;border-bottom:1px solid var(--border)}
+.board tr:last-child td{border-bottom:none}
+.board tr:nth-child(even) td{background:rgba(168,124,42,.04)}
+.board tr.moving td{background:rgba(158,43,37,.07)}
+.board .ys{color:var(--vermilion);font-weight:700}
+.board .sy{font-weight:700}
+.tag{display:inline-block;font-size:11.5px;padding:2px 7px;border-radius:3px;margin:1px;letter-spacing:1px}
+.tag-red{background:rgba(158,43,37,.12);color:var(--vermilion)}
+.tag-jade{background:rgba(79,111,87,.12);color:var(--jade)}
+.tag-gold{background:rgba(168,124,42,.15);color:var(--gold)}
+.params{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:20px 0}
+.param{background:var(--paper-light);border:1px solid var(--border);border-radius:4px;padding:12px 14px;text-align:center}
+.param .k{font-size:12.5px;color:var(--ink-fade);letter-spacing:2px;margin-bottom:4px}
+.param .v{font-size:15.5px;color:var(--ink);font-weight:600}
+.param .v.red{color:var(--vermilion)}
+.card{background:var(--paper-light);border:1px solid var(--border);border-radius:6px;padding:22px 26px;margin-bottom:16px}
+.card .ct{font-family:'KaiTi',serif;font-size:22.5px;color:var(--ink);margin-bottom:4px;letter-spacing:2px}
+.card .cs{font-size:14.5px;color:var(--vermilion);margin-bottom:12px;letter-spacing:1px;font-weight:600}
+.card p{color:var(--ink-soft);margin-bottom:10px;text-align:justify}
+.card p:last-child{margin-bottom:0}
+.ci-block{background:var(--paper-light);border:1px solid var(--border);border-radius:6px;padding:16px 20px;margin-bottom:14px}
+.ci-cap{font-family:'KaiTi',serif;font-size:17.5px;color:var(--vermilion);letter-spacing:6px;margin-bottom:12px;text-align:center}
+.ci-item{padding:10px 0;border-bottom:1px dashed var(--border)}
+.ci-item:last-child{border-bottom:none}
+.ci-label{font-size:14.5px;color:var(--ink-fade);margin-bottom:5px;letter-spacing:1px}
+.ci-text{font-family:'KaiTi','STKaiti',serif;font-size:18.5px;color:var(--ink);margin-bottom:6px;letter-spacing:1px;line-height:1.7}
+.ci-note{font-size:15px;color:var(--ink-soft);line-height:1.85}
+.gua-tags{text-align:center;margin:-6px 0 20px}
+.gua-tags .tag{font-size:13px;padding:3px 10px}
+.mini-table{width:100%;border-collapse:collapse;margin:10px 0;font-size:14px}
+.mini-table td{padding:8px 10px;border-bottom:1px dashed var(--border);vertical-align:top}
+.mini-table td:first-child{color:var(--vermilion);font-weight:600;white-space:nowrap}
+.verdict{background:linear-gradient(180deg,#3a2f22,#2b2218);border:2px solid var(--gold);border-radius:8px;
+  padding:40px 38px;margin:30px 0;color:#f0e6d0;box-shadow:0 8px 30px rgba(40,30,15,.25)}
+.verdict-title{text-align:center;font-family:'KaiTi',serif;font-size:30px;color:var(--gold-bright);letter-spacing:10px;margin-bottom:28px}
+.verdict-body{font-size:17.5px;line-height:2.1;color:#e8dcc2;text-indent:2em;text-align:justify}
+.verdict-body p{margin-bottom:14px}
+.verdict-body p:last-child{margin-bottom:0}
+.summary{background:linear-gradient(135deg,rgba(158,43,37,.06),rgba(168,124,42,.06));border:1.5px solid var(--vermilion);
+  border-radius:6px;padding:28px 30px;margin:30px 0}
+.summary h3{font-family:'KaiTi',serif;font-size:24px;color:var(--vermilion);margin-bottom:12px;letter-spacing:2px}
+.summary p{color:var(--ink);font-size:17.5px;line-height:2}
+.notice{text-align:center;font-size:14.5px;color:var(--ink-fade);border-top:1px dashed var(--border);padding-top:22px;margin-top:30px;line-height:1.9}
+.footer{text-align:center;margin-top:30px;font-size:12px;color:var(--ink-fade);letter-spacing:2px}
+.footer .orn{color:var(--gold);margin:0 8px}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+.header,.hex-display,.board,.card,.verdict,.summary{animation:fadeUp .7s ease both}
+@media(max-width:600px){body{padding:20px 12px 40px}.title-main{font-size:32px}.board{overflow-x:auto}.board table{min-width:560px}}
+</style></head><body><div class="wrap">
+
+<header class="header">
+  <div class="seal">卦</div>
+  <div class="title-sub">六爻卦象解析</div>
+  <h1 class="title-main">地泽临</h1>
+  <div class="divider"><span>✦</span><span>九二爻动 · 变</span><span>✦</span></div>
+  <h1 class="title-main red">地雷复</h1>
+  <div class="header-meta">丙午年 · 乙未月 · <span class="accent">辛卯日</span>　｜　家人介绍的女缘，是否旺自己</div>
+</header>
+
+<div class="section">
+  <div class="section-title"><div class="num">壹</div><h2>卦象总览</h2><div class="line"></div></div>
+  <div class="meta-bar"><span class="meta-item"><span class="meta-k">月建</span><span class="meta-v">未·土</span></span><span class="meta-item"><span class="meta-k">日辰</span><span class="meta-v">辛卯·木</span></span><span class="meta-item"><span class="meta-k">旬空</span><span class="meta-v">午、未</span></span><span class="meta-item"><span class="meta-k">用神</span><span class="meta-v accent">妻财（六五·癸亥）</span></span></div>
+  <div class="hex-display"><div class="hex-block"><div class="gua-name">地泽临</div><div class="gua-tag">主卦 · 坤宫·土</div><div class="hex-lines"><div class="yao"><span class="yleft"><span class="term" data-term="螣蛇" tabindex="0">螣蛇</span>·<span class="term" data-term="子孙" tabindex="0">子孙</span></span><span class="pos">上六</span><div class="bars split"><span class="b"></span><span class="b"></span></div><span class="yright">癸酉</span><span class="ytags"><span class="ytag term" data-term="暗动" tabindex="0">暗动</span></span></div><div class="yao"><span class="yleft"><span class="term" data-term="勾陈" tabindex="0">勾陈</span>·<span class="term" data-term="妻财" tabindex="0">妻财</span></span><span class="pos">六五</span><div class="bars split"><span class="b"></span><span class="b"></span></div><span class="yright">癸亥</span><span class="ytags"><span class="ytag ying term" data-term="应爻" tabindex="0">应</span></span></div><div class="yao"><span class="yleft"><span class="term" data-term="朱雀" tabindex="0">朱雀</span>·<span class="term" data-term="兄弟" tabindex="0">兄弟</span></span><span class="pos">六四</span><div class="bars split"><span class="b"></span><span class="b"></span></div><span class="yright">癸丑</span><span class="ytags"><span class="ytag term" data-term="月破" tabindex="0">月破</span></span></div><div class="yao"><span class="yleft"><span class="term" data-term="青龙" tabindex="0">青龙</span>·<span class="term" data-term="兄弟" tabindex="0">兄弟</span></span><span class="pos">六三</span><div class="bars split"><span class="b"></span><span class="b"></span></div><span class="yright">丁丑</span><span class="ytags"><span class="ytag term" data-term="月破" tabindex="0">月破</span></span></div><div class="yao moving"><span class="yleft"><span class="term" data-term="玄武" tabindex="0">玄武</span>·<span class="term" data-term="官鬼" tabindex="0">官鬼</span></span><span class="pos">九二</span><div class="bars solid"><span class="b"></span></div><span class="yright">丁卯</span><span class="ytags"><span class="ytag shi term" data-term="世爻" tabindex="0">世</span><span class="ytag">动</span><span class="ytag term" data-term="临日建" tabindex="0">临日建</span><span class="ytag term" data-term="化退神" tabindex="0">化退神</span><span class="ytag term" data-term="月墓" tabindex="0">月墓</span><span class="ytag term" data-term="空墓" tabindex="0">空墓</span></span></div><div class="yao"><span class="yleft"><span class="term" data-term="白虎" tabindex="0">白虎</span>·<span class="term" data-term="父母" tabindex="0">父母</span></span><span class="pos">初九</span><div class="bars solid"><span class="b"></span></div><span class="yright">丁巳</span><span class="ytags"></span></div></div></div><div class="hex-mid"><div class="arrow">➜</div><div class="gua-tags"><span class="tag tag-jade">变卦·六合卦</span><span class="tag tag-gold">变比和(吉)</span></div></div><div class="hex-block"><div class="gua-name">地雷复（六合卦）</div><div class="gua-tag">变卦 · 坤宫·土</div><div class="hex-lines"><div class="yao"><span class="yleft"><span class="term" data-term="螣蛇" tabindex="0">螣蛇</span>·<span class="term" data-term="子孙" tabindex="0">子孙</span></span><span class="pos">上六</span><div class="bars split"><span class="b"></span><span class="b"></span></div><span class="yright">癸酉</span><span class="ytags"></span></div><div class="yao"><span class="yleft"><span class="term" data-term="勾陈" tabindex="0">勾陈</span>·<span class="term" data-term="妻财" tabindex="0">妻财</span></span><span class="pos">六五</span><div class="bars split"><span class="b"></span><span class="b"></span></div><span class="yright">癸亥</span><span class="ytags"></span></div><div class="yao"><span class="yleft"><span class="term" data-term="朱雀" tabindex="0">朱雀</span>·<span class="term" data-term="兄弟" tabindex="0">兄弟</span></span><span class="pos">六四</span><div class="bars split"><span class="b"></span><span class="b"></span></div><span class="yright">癸丑</span><span class="ytags"></span></div><div class="yao"><span class="yleft"><span class="term" data-term="青龙" tabindex="0">青龙</span>·<span class="term" data-term="兄弟" tabindex="0">兄弟</span></span><span class="pos">六三</span><div class="bars split"><span class="b"></span><span class="b"></span></div><span class="yright">庚辰</span><span class="ytags"></span></div><div class="yao moving"><span class="yleft"><span class="term" data-term="玄武" tabindex="0">玄武</span>·<span class="term" data-term="官鬼" tabindex="0">官鬼</span></span><span class="pos">六二</span><div class="bars split"><span class="b"></span><span class="b"></span></div><span class="yright">庚寅</span><span class="ytags"><span class="ytag term" data-term="化退神" tabindex="0">化退神</span></span></div><div class="yao"><span class="yleft"><span class="term" data-term="白虎" tabindex="0">白虎</span>·<span class="term" data-term="妻财" tabindex="0">妻财</span></span><span class="pos">初九</span><div class="bars solid"><span class="b"></span></div><span class="yright">庚子</span><span class="ytags"></span></div></div></div></div>
+  <div class="ci-block"><div class="ci-cap">卦　辞</div><div class="ci-item"><div class="ci-label">主卦 · 地泽临</div><div class="ci-text">临：元，亨，利，贞。至于八月有凶。</div><div class="ci-note">临，面临、监临。二阳自下而生、阳气渐长，为来临、发展之象，至为亨通、宜守正；然“至于八月有凶”明诫盛极必衰——当下正处由盛转衰之拐点。</div></div><div class="ci-item"><div class="ci-label">变卦 · 地雷复</div><div class="ci-text">复：亨。出入无疾，朋来无咎。反复其道，七日来复，利有攸往。</div><div class="ci-note">复，回复、回归。一阳来复，亨通；道有反复、七日一来复，利于前往。主否极泰来、重新蓄积、循环往复。</div></div></div><div class="ci-block"><div class="ci-cap">动爻爻辞</div><div class="ci-item"><div class="ci-label">动爻 · 临九二</div><div class="ci-text">九二：咸临，吉，无不利。</div><div class="ci-note">咸，感。以感相应而临，爻辞本主吉。然爻辞之吉须结合<span class="term" data-term="纳甲" tabindex="0">纳甲</span>动象——九二化退、<span class="term" data-term="入墓" tabindex="0">入墓</span>，吉中带退，不可执爻辞之吉而忽动象之退。</div></div></div><div class="card"><div class="ct">卦象推演</div><p>临卦（下兑上坤）二阳自下而生，阳气渐长，为来临、监临之象，事物处发展到来之势；然卦辞明诫“八月有凶”，盛极必衰。今九二发动变阴，下卦兑变震，全卦成复——由“二阳”退回“一阳”，阳气倒退、由盛转衰之象。复卦一阳来复，主否极泰来、循环往复、重新蓄积。故卦象寓意：当下正处由盛转衰之退守期（临盛而将衰），退至极处则触底回升（复），非一路衰败，乃先退后复。又变卦复为六合卦（初子四丑、二寅五亥、三辰上酉，三对皆合），主和合、聚拢、持久；临（非六合）变复（六合），由散转合，缘分向聚拢发展，于姻緪为正面之象。然“用神有气方济”，用神亥水衰，须待旺月（亥子月）六合之力与用神之力合力方显。</p></div><div class="card"><div class="ct">动爻推演</div><p>九二为本卦独发之动爻，又恰为世爻（求测者自身之位），故动爻即“自己”，其变化直接主导事情走向。九二丁卯动化庚寅为化退神（卯退至寅）——主动退守、心气减退；兼官鬼持世（忧虑负担）、入月建未墓（困束施展不开）、临玄武（暗自动摇），四象叠见皆主退守。要害在于：动爻在世，说明这份退意与困顿是“自己发动”的主动因，非外力强加；其旺衰与应期（待丑月冲墓出困）方决定何时可转。</p></div>
+</div>
+
+<div class="section">
+  <div class="section-title"><div class="num">贰</div><h2>分层解析</h2><div class="line"></div></div>
+  <div class="card"><div class="ct">用神 · 妻财癸亥水</div><div class="cs">贵而暂弱 — 本质旺你</div><p>临五爻君位（九五之尊，卦中至尊之位）：<span class="term" data-term="用神" tabindex="0">用神</span>得此位，主对象本身不俗、条件显要，此缘于你命局中分量颇重——是值得看重的一段缘分。家里介绍而临君位，多应对方家境或自身条件“拿得出手”。</p><p><span class="term" data-term="用神" tabindex="0">用神</span>生世（亥水生卯木）：她对你本质生扶益旺，是好缘分的根。但须辨“贵”与“旺”——爻位之尊（贵）不等同能量之强（旺）。亥水于未月处死地、受月建未土之克、日辰卯木之泄，财爻两头受压。故是“<span class="term" data-term="贵而暂弱" tabindex="0">贵而暂弱</span>”：人好、缘分重，但眼下能量没出来，比较淡、没发力。</p></div><div class="card"><div class="ct">元神 · 子孙酉金 暗动</div><div class="cs">隐性托底 — 暗中输血</div><p>酉金为生<span class="term" data-term="用神" tabindex="0">用神</span>之<span class="term" data-term="元神" tabindex="0">元神</span>（金生水）。其于未月得土之生而旺相（五行金相、十二长生冠带），逢日辰卯冲——旺相逢冲为“<span class="term" data-term="暗动" tabindex="0">暗动</span>”，非<span class="term" data-term="日破" tabindex="0">日破</span>。<span class="term" data-term="元神" tabindex="0">元神</span><span class="term" data-term="暗动" tabindex="0">暗动</span>，暗中生助亥水，是卦中一处隐性的生扶托底之力。</p><p>“暗”主不知不觉、隐性进行。现实多应长辈、介绍人在背后默默撮合，或对方暗藏好感未露。隐而不显，眼下难见明效，却保底不绝。</p></div><div class="card"><div class="ct">世爻 · 官鬼丁卯木</div><div class="cs">四重退守 — 全卦病灶</div><p><span class="term" data-term="世爻" tabindex="0">世爻</span>代表你自己，叠了四重退守之象，是你要正视的核心：</p><table class="mini-table"><thead><tr><th>象</th><th>含义</th></tr></thead><tbody><tr><td>官鬼持世</td><td>此事让你忧虑、有负担感、压力在身</td></tr><tr><td>入未墓</td><td>被困束、施展不开、憋屈、暂不出头</td></tr><tr><td>动化退神（卯→寅）</td><td>心气在退、有打退堂鼓的念头</td></tr><tr><td>临玄武</td><td>暗自动摇、私下盘算、心里不踏实</td></tr></tbody></table><p>权重须分清：<span class="term" data-term="化退神" tabindex="0">化退神</span>是动爻自身不可逆的退气大势，是核心病灶；日辰卯为木<span class="term" data-term="帝旺" tabindex="0">帝旺</span>、比和<span class="term" data-term="世爻" tabindex="0">世爻</span>，仅作“保命底”——保元气不致断绝、使<span class="term" data-term="世爻" tabindex="0">世爻</span>属“困中有根”而非衰死，但既不能扭转化退大势，也不负责挣脱墓锁（出墓靠冲墓，见应期）。勿抬高日辰救应之力。又所入者乃<span class="term" data-term="空墓" tabindex="0">空墓</span>（未落<span class="term" data-term="旬空" tabindex="0">旬空</span>），墓不甚牢，困束带虚——故是“退势为主、困中有根”，而非轻言“暂困即可解”。退意主因在<span class="term" data-term="世爻" tabindex="0">世爻</span>自身内象，外因是<span class="term" data-term="兄弟" tabindex="0">兄弟</span>克财的现实/财务阻力。</p></div><div class="card"><div class="ct">三合 · 亥卯未（虚合待用）</div><div class="cs">有牵绊意向 — 但非实成之局</div><p>亥（<span class="term" data-term="用神" tabindex="0">用神</span>·静）—卯（<span class="term" data-term="世爻" tabindex="0">世爻</span>·动）—未（月建·墓库）三支齐备，但本卦仅<span class="term" data-term="世爻" tabindex="0">世爻</span>卯木一爻独动，<span class="term" data-term="应爻" tabindex="0">应爻</span>亥水为静爻、未是月建（非卦内爻）。按《增删卜易》<span class="term" data-term="三合" tabindex="0">三合</span>实局须三爻齐动／两动一静／内外卦动变凑局，此处只算“虚一待用之合”，并非实成木局。</p><p>故只可断：合的牵绊意向在、缘分支在、不易立刻断绝；但不可夸为“木局已成、合化聚世”的决定性旺力。须待流月填实（如亥子月水生木、或有动爻加入）方能真正发力。化向为木（<span class="term" data-term="官鬼" tabindex="0">官鬼</span>），即便成局也带压力，非纯益——作辅助参考即可。</p></div><div class="card"><div class="ct">六神点睛 · 玄武世 / 勾陈应</div><div class="cs">贴合现状 — 双方皆未发力</div><p><span class="term" data-term="世爻" tabindex="0">世爻</span>临<span class="term" data-term="玄武" tabindex="0">玄武</span>：你那点动摇、犹疑，是“暗”的，没全摆到台面上。<span class="term" data-term="应爻" tabindex="0">应爻</span>（她）临<span class="term" data-term="勾陈" tabindex="0">勾陈</span>：<span class="term" data-term="勾陈" tabindex="0">勾陈</span>主拖延、牵缠、旧事。她这边推进慢、有牵扯，或性格犹豫、身上有旧事牵绊。两相对照——你暗自退 + 她拖缠绕磨，正对“相亲推进吃力、双方都没真正发力”的现状。</p></div><div class="card"><div class="ct">兄弟月破 · 空亡无碍</div><div class="cs">偏好信号 — 卦象实而不虚</div><p><span class="term" data-term="兄弟" tabindex="0">兄弟</span>丑土两重<span class="term" data-term="月破" tabindex="0">月破</span>：<span class="term" data-term="兄弟" tabindex="0">兄弟</span>主劫财、竞争、阻力，<span class="term" data-term="月破" tabindex="0">月破</span>则克财之阻力被削弱，外部竞争/破财之力当下较轻，渠道（家里介绍）相对干净。</p><p><span class="term" data-term="空亡" tabindex="0">空亡</span>午未，卦中六爻无一落空：世、用、动爻皆实，卦象不虚浮，缘分与她之生扶皆有实，非镜花水月。唯年月支午未双空，示当下大环境根基暂虚浮未定，仅作参考。</p></div><div class="card"><div class="ct">卦意 · 临 → 复</div><div class="cs">退守蓄力 — 否极泰来</div><p>临：来临、兴盛，卦辞“至于八月有凶”，诫盛极将衰——当下正处由盛转衰拐点。复：一阳来复，否极泰来、重新蓄积、主“慢”、七日来复，退到谷底会回升。卦象（二阳退回一阳）与<span class="term" data-term="世爻" tabindex="0">世爻</span>化退、<span class="term" data-term="入墓" tabindex="0">入墓</span>同向：当下是退守蓄力期，急不得。</p></div><div class="card"><div class="ct">应期 · 转机窗口（双向辩证）</div><div class="cs">最佳在亥子月 — 防丑月错位</div><table class="mini-table"><thead><tr><th>时点</th><th>含义（含双向）</th></tr></thead><tbody><tr><td>亥、子月（初冬·仲冬）★最佳</td><td>妻财亥水当令最旺 → 感情能量最强、她最有力；世爻虽未出墓但有日辰根托底。此为双方相对重叠的利好窗口。</td></tr><tr><td>丑月（季冬）</td><td>丑冲未开木墓 → 世爻出困、你状态回勇（利自身）；但丑土当令克水、水汽将退 → 财爻亥水此时转弱（她/感情能量已过峰值）。存在“你行她退”的时间错位。</td></tr></tbody></table><p>故勿笼统说“丑月发力即好转”——真正要把握的是亥子月（财旺、双方较有利）；丑月虽利你出墓，但财已转弱，须防错位。眼前但守心蓄锐，莫于<span class="term" data-term="入墓" tabindex="0">入墓</span>之时强求冒进。</p></div>
+</div>
+
+<div class="section">
+  <div class="section-title"><div class="num">叁</div><h2>整体推演 · 断语</h2><div class="line"></div></div>
+  <div class="verdict"><div class="verdict-title">断　曰</div><div class="verdict-body"><p>所占乃家里介绍之女缘，问其是否旺己。卦得坤宫地泽临，九二独发，变地雷复。</p><p>取<span class="term" data-term="妻财" tabindex="0">妻财</span>亥水为用，临于<span class="term" data-term="应爻" tabindex="0">应爻</span>，正是此人；又居五爻君位，至尊至贵之位也。<span class="term" data-term="用神" tabindex="0">用神</span>得此尊位，主其人本身不俗、条件显要，此缘于你命局中分量颇重。更兼<span class="term" data-term="用神" tabindex="0">用神</span>生世（亥水生卯木），是为相生相旺之局——此女于你，本质属生扶益旺之人，非克耗之辈。根基又借亥卯未<span class="term" data-term="三合" tabindex="0">三合</span>而齐，有牵绊、不轻散。故论“旺你”二字，答案确凿：是好缘分，能旺你，且对象不差。（注：亥卯未三支虽备，然仅<span class="term" data-term="世爻" tabindex="0">世爻</span>独动，为虚合待用、非实成木局，有牵绊意向而已，不作决定性旺力。）</p><p>然则当下未得其时，乃“<span class="term" data-term="贵而暂弱" tabindex="0">贵而暂弱</span>”之局。<span class="term" data-term="用神" tabindex="0">用神</span>亥水于未月处死地，受月建<span class="term" data-term="兄弟" tabindex="0">兄弟</span>未土之克、日辰卯木之泄，财爻衰弱受压。幸有<span class="term" data-term="元神" tabindex="0">元神</span><span class="term" data-term="子孙" tabindex="0">子孙</span>酉金，于未月得土之生而旺相，逢日辰卯冲，非为<span class="term" data-term="日破" tabindex="0">日破</span>，乃旺相逢冲之“<span class="term" data-term="暗动" tabindex="0">暗动</span>”，暗中生助亥水——是卦中隐性的托底之力，主暗中有人相助输血，多应长辈介绍人在背后默默撮合，或对方暗藏好感未露。此力隐而不显，眼下难见明效，却保底不绝。</p><p>全卦之病灶，实在<span class="term" data-term="世爻" tabindex="0">世爻</span>。<span class="term" data-term="世爻" tabindex="0">世爻</span>丁卯，<span class="term" data-term="官鬼" tabindex="0">官鬼</span><span class="term" data-term="持世" tabindex="0">持世</span>，已主忧虑负担；又入月建未墓，被困束而施展不开；更发动<span class="term" data-term="化退神" tabindex="0">化退神</span>（卯化寅），心气渐退；复临<span class="term" data-term="玄武" tabindex="0">玄武</span>，暗自动摇。四象叠见，皆主退守。退意之主因在<span class="term" data-term="世爻" tabindex="0">世爻</span>自身内象，外则因<span class="term" data-term="兄弟" tabindex="0">兄弟</span>克财之现实阻力以为诱因，非独财务一事也。幸日辰卯木为<span class="term" data-term="帝旺" tabindex="0">帝旺</span>之地，比和<span class="term" data-term="世爻" tabindex="0">世爻</span>，留强根以撑元气，使<span class="term" data-term="世爻" tabindex="0">世爻</span>属“困中有根”而非衰死；且所入者乃<span class="term" data-term="空墓" tabindex="0">空墓</span>，墓不甚牢，困束带虚。然须明辨：<span class="term" data-term="化退神" tabindex="0">化退神</span>乃动爻自身不可逆之退气大势，为核心病灶，日辰仅作保命之底，可缓一时而不可扭转退势；出墓亦非靠日辰，须待冲墓（丑冲未）方解。故是“退势为主、困中有根”，而非轻言“暂困即可解”。</p><p>又<span class="term" data-term="兄弟" tabindex="0">兄弟</span>丑土两重<span class="term" data-term="月破" tabindex="0">月破</span>，克财之阻力当下被削弱，渠道尚净；<span class="term" data-term="空亡" tabindex="0">空亡</span>午未，而卦中六爻无一落空，世、用、动爻皆实，卦象不虚，缘分与她之生扶皆有实。</p><p>卦由临变复，乃由二阳退回一阳，盛极转衰、退守蓄积之象；复卦主慢、主重新蓄力、否极泰来、七日来复。统观之：此缘本质旺你、对象不差且分量重，暗中又有<span class="term" data-term="元神" tabindex="0">元神</span>托底、虚合牵绊、日建撑世、<span class="term" data-term="忌神" tabindex="0">忌神</span>被破，多方托著，断绝不了；唯眼下时机未至、<span class="term" data-term="用神" tabindex="0">用神</span>暂弱、自身又陷“化退+<span class="term" data-term="入墓" tabindex="0">入墓</span>”之退守（日辰保底而非解药），旺力暂时封存、接之不住。</p><p>断曰：宜养不宜攻，宜守不宜急，更不可于<span class="term" data-term="入墓" tabindex="0">入墓</span>之时强求冒进、亦不可轻言放弃。静待其变，应期须辩证：感情（财亥水）最佳窗口在入冬亥子月，水当令、财最旺、她最有力，<span class="term" data-term="世爻" tabindex="0">世爻</span>虽未出墓亦有日辰根托底，此乃双方相对利好之时，当善把握；至季冬丑月，丑冲未开墓，<span class="term" data-term="世爻" tabindex="0">世爻</span>出困、你状态回勇，但丑土克水、财已转弱，恐“你行她退”，须防错位。故着力推进之机当重在亥子月，而非丑月。眼前但守心蓄锐，待时而动，否极自能泰来。</p></div></div>
+</div>
+
+<div class="summary">
+  <h3>一语总括</h3>
+  <p>好缘分、能旺你、对象不差且分量重（<span class="term" data-term="用神" tabindex="0">用神</span>生世 + 临五爻君位）；<span class="term" data-term="三合" tabindex="0">三合</span>亥卯未为虚合待用、仅作牵绊参考，非实局。当下“<span class="term" data-term="贵而暂弱" tabindex="0">贵而暂弱</span>”（<span class="term" data-term="用神" tabindex="0">用神</span>衰弱受压）、<span class="term" data-term="元神" tabindex="0">元神</span><span class="term" data-term="暗动" tabindex="0">暗动</span>暗中托底（长辈撮合）、你<span class="term" data-term="世爻" tabindex="0">世爻</span>“化退+<span class="term" data-term="入墓" tabindex="0">入墓</span>”双重退守为主导（日辰仅保命底、非解药）——缘分实而时机未至、退势为主、困中有根。眼下宜守宜养；应期辩证：最佳窗口在亥子月（财旺、双方较有利），丑月你出墓但财已转弱、须防错位。</p>
+</div>
+
+<div class="notice">※ 理性提醒 ※<br>六爻为传统文化与占卜术，非科学。断的是“势、象、时机”，非事实预测。相亲能否成、是否合适，终究取决于两人真实的人品、三观与相处契合度，以及介绍人／长辈推动的实际力度。占卜结果仅作心态调整与时机把握之参考。</div>
+
+<div class="footer">六爻卦象解析报告<span class="orn">✦</span>地泽临 · 九二爻动 · 变地雷复<span class="orn">✦</span>仅供参考</div>
+
+<div id="termPop" class="popover"></div>
+<script>const GLOSSARY={"暗动": "静爻被日辰冲，若该爻旺相则为「暗动」——被激发而暗中发力、有用；若休囚则为日破（冲散无用）。", "月破": "月建所冲之爻。一月之内衰败、无用，过月即复。忌神月破为吉（阻力被破），用神月破为凶。", "日破": "休囚衰弱之静爻被日辰冲，冲散无用。与暗动相对：旺相逢冲为暗动，休囚逢冲为日破。", "空亡": "即旬空。以日辰查所在旬空的两个地支，空亡之爻旺不为真空、衰则为空。日月建本身不以空论。", "旬空": "即空亡。甲子旬空戌亥、甲申旬空午未……空亡之爻待填实或冲日方有用。", "真空": "空亡之爻恰为当季死地：春土、夏金、秋木、冬火为真空，到底全空；四季月（辰戌丑未）无真空。", "化进神": "动爻化为同五行的前进地支（如寅→卯、巳→午），主增益、前进、壮大。", "化退神": "动爻化为同五行的后退地支（如卯→寅、午→巳），主减退、退缩、衰减。", "化回头生": "动爻变出之爻回头生扶动爻本身（变爻生动爻），力量增强，吉。", "化回头克": "动爻变出之爻回头克制动爻本身（变爻克动爻），力量受损，凶。", "入墓": "爻入五行墓库（木墓未、火墓戌、金墓丑、水墓辰），主困束、暂不出头、力量被封存，待冲方出。", "月墓": "爻入月建之墓库（月建地支恰为该爻五行墓库），主月内困束。", "空墓": "所入之墓库恰落旬空，墓不牢，困束是虚的、易脱，非死局。", "三合": "三支合局：申子辰水、亥卯未木、寅午戌火、巳酉丑金。须三爻齐动方成实局，合力大、专一；单动借日月只算虚合待用。", "六合卦": "一卦之初四、二五、三上三对皆地支六合，主和合、聚拢、持久；占姻缘见合为吉。", "六冲卦": "一卦之初四、二五、三上三对皆相冲，主散、变动、反复；占吉事不宜。", "反吟": "卦变而呈相冲相克之象（动爻化回头冲），主反复动荡：成而败、得而失、来而去。", "伏吟": "卦变而六爻地支五行不变，主停滞忧郁、呻吟不伸，用神旺则冲开可解。", "卦变生克": "主卦宫五行与变卦宫五行的生克：变生/比和为吉，变克主卦为大凶。", "用神": "所占之事对应的六亲爻，是全卦核心，取错则全错。如男占姻缘以妻财为用。", "元神": "生用神之爻（生我者），生扶用神。须有力方能生；休囚月破化退则「见生不生」。", "忌神": "克用神之爻（克我者）。须有力方能克害；休囚月破化退则「虽动不克」，化凶为吉。", "仇神": "克元神、生忌神之爻，间接害用（制元、助忌）。", "持世": "某六亲临世爻（求测者自身），如官鬼持世主忧虑负担，子孙持世主无忧。", "官鬼": "六亲之一，主忧虑、压力、功名、工作、疾病；女占以官鬼为夫。", "妻财": "六亲之一，主钱财、财物；男占以妻财为妻/女友。", "子孙": "六亲之一，为福德之神、制官鬼解忧、主医药、子女。", "父母": "六亲之一，主文书、长辈、辛劳、房屋、车马。", "兄弟": "六亲之一，主竞争、劫财、阻隔、同辈。", "青龙": "六神之一（甲乙日起），主喜庆、桃花、文书、财喜、正义。", "朱雀": "六神之一（丙丁日起），主口舌、是非、消息、文书、通信。", "勾陈": "六神之一（戊日起），主拖延、牵缠、旧事、田土、纠缠。", "螣蛇": "六神之一（己日起），主虚惊、怪异、梦寐、纠缠、惊恐。", "白虎": "六神之一（庚辛日起），主血光、丧服、疾病、刚猛、凶险。", "玄武": "六神之一（壬癸日起），主暗昧、隐私、欺骗、盗贼、桃花暗情。", "纳甲": "给六爻配天干地支之法（乾纳甲壬、坤纳乙癸……），是装卦基础。", "临日建": "爻之地支与日辰相同，旺相之极，逢冲克不破（单克单冲）；但月建+动爻群克仍破。", "临月建": "爻之地支与月建相同，当月之内逢克不伤、逢冲不破。", "世爻": "代表求测者自身（或所测主体），是断卦的「我」。", "应爻": "代表对方、所测之人或事，与世爻相对。", "帝旺": "十二长生中力量最旺的阶段（如木帝旺于卯），爻临帝旺为强旺。", "贵而暂弱": "用神临五爻君位为「贵」（地位尊显），但受月日制压为「弱」（能量不足）——贵不等于旺。", "化比和": "动爻变出之爻与动爻同五行、但非进退神，力量维持、无明显增减。", "化他": "动爻变出之爻与动爻不同五行、且非回头生克——为动爻生变爻（化泄，力量外泄）或动爻克变爻（化制，费力），均使动爻减损。", "化墓": "动爻变出之爻恰为本身墓库（自化墓），主变化落入收藏、暂不能落实，待冲墓方出。", "日墓": "爻入日辰之墓（日支为该爻五行墓库），主当日困束、暂不出头。", "动爻墓": "卦中动爻之地支为某爻之墓库，该爻被动爻收藏困束，待冲墓方出。", "动而愈动": "动爻被日辰冲且本身旺相，愈冲愈动、力量激增，主事愈动愈成。", "动而冲散": "动爻被日辰冲且本身衰弱，被冲散、力量溃散，主事动而败散。"};</script>
+<script>
+document.addEventListener('click', function(e){
+  var pop = document.getElementById('termPop');
+  if(e.target.classList.contains('pop-close')){ pop.style.display='none'; return; }
+  var t = e.target.closest('.term');
+  if(t && t.dataset.term){
+    e.stopPropagation();
+    var key = t.dataset.term, text = GLOSSARY[key];
+    if(!text) return;
+    pop.innerHTML = '<div class="pop-title">' + key + '<span class="pop-close">×</span></div><div class="pop-text">' + text + '</div>';
+    pop.style.display = 'block';
+    var rect = t.getBoundingClientRect();
+    var w = pop.offsetWidth, h = pop.offsetHeight;
+    var left = Math.min(rect.left, window.innerWidth - w - 16);
+    var top = rect.bottom + 8;
+    if(top + h > window.innerHeight - 8) top = rect.top - h - 8;
+    pop.style.left = Math.max(8, left) + 'px';
+    pop.style.top = Math.max(8, top) + 'px';
+  } else if(!pop.contains(e.target)){
+    pop.style.display = 'none';
+  }
+});
+document.addEventListener('keydown', function(e){ if(e.key==='Escape') document.getElementById('termPop').style.display='none'; });
+</script>
+
+</div></body></html>
