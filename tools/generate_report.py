@@ -47,6 +47,8 @@ body{
 .divider{display:flex;align-items:center;justify-content:center;gap:14px;margin:18px 0;color:var(--gold)}
 .divider::before,.divider::after{content:"";height:1px;width:90px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
 .info-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin:24px 0}
+.header-meta{margin-top:20px;font-size:14.5px;color:var(--ink-soft);letter-spacing:1px;line-height:1.8}
+.header-meta .accent{color:var(--vermilion);font-weight:600}
 .info-card{background:var(--paper-light);border:1px solid var(--border);border-left:3px solid var(--gold);border-radius:4px;padding:16px 18px}
 .info-card .label{font-size:13.5px;color:var(--ink-fade);letter-spacing:2px;margin-bottom:6px}
 .info-card .value{font-size:17.5px;color:var(--ink);font-weight:600}
@@ -378,17 +380,9 @@ def render_verdict(verdict):
 
 def generate_html(case, board):
     m = case["meta"]
-    info = [
-        ("占时", f'{m["year"]}年 · {m["month"]}月 · <span class="accent">{m["day"]}日</span>'),
-        ("旬空", f'<span class="accent">{m["xunkong"]}</span>'),
-        ("问事", m["question"]),
-        ("用神", f'{board.yongshen_qin or "—"} <span class="accent">({board.line(5).gan}{board.line(5).zhi})</span>'
-                 if board.yongshen_qin else "—"),
-    ]
-    info_cards = "".join(
-        f'<div class="info-card"><div class="label">{esc(k)}</div><div class="value">{v}</div></div>'
-        for k, v in info
-    )
+    header_meta = (f'{esc(m["year"])}年 · {esc(m["month"])}月 · '
+                   f'<span class="accent">{esc(m["day"])}日</span>'
+                   f'　｜　{esc(m["question"])}')
 
     return f"""<!DOCTYPE html>
 <html lang="zh-CN"><head><meta charset="UTF-8">
@@ -402,9 +396,8 @@ def generate_html(case, board):
   <h1 class="title-main">{esc(case['subtitle'].split(' · ')[0])}</h1>
   <div class="divider"><span>✦</span><span>九二爻動 · 變</span><span>✦</span></div>
   <h1 class="title-main red">{esc(board.changed_hexagram or '變卦')}</h1>
+  <div class="header-meta">{header_meta}</div>
 </header>
-
-<div class="info-grid">{info_cards}</div>
 
 <div class="section">
   <div class="section-title"><div class="num">壹</div><h2>卦象總覽</h2><div class="line"></div></div>
