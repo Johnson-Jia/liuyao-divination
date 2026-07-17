@@ -274,9 +274,9 @@ def render_hex_diagram(board):
                 "tags": tags}
 
     left_title = board.hexagram + suffix(board.is_liuhe_gua, board.is_liuchong_gua)
-    right_title = (board.changed_hexagram or "變卦") + suffix(board.changed_is_liuhe, board.changed_is_liuchong)
+    right_title = (board.changed_hexagram or "变卦") + suffix(board.changed_is_liuhe, board.changed_is_liuchong)
     left = block(left_title, "主卦", yin_yangs, moving_set, main_info)
-    right = block(right_title, "變卦", changed_yy, moving_set, changed_info)
+    right = block(right_title, "变卦", changed_yy, moving_set, changed_info)
     mid = f'<div class="hex-mid"><div class="arrow">➜</div>{render_gua_tags(board)}</div>'
     return f'<div class="hex-display">{left}{mid}{right}</div>'
 
@@ -401,16 +401,16 @@ def render_overview(overview):
         )
 
     if overview.get("gua_ci"):
-        out.append(f'<div class="ci-block"><div class="ci-cap">卦　辭</div>'
+        out.append(f'<div class="ci-block"><div class="ci-cap">卦　辞</div>'
                    f'{ci_items(overview["gua_ci"])}</div>')
     if overview.get("yao_ci"):
-        out.append(f'<div class="ci-block"><div class="ci-cap">動爻爻辭</div>'
+        out.append(f'<div class="ci-block"><div class="ci-cap">动爻爻辞</div>'
                    f'{ci_items(overview["yao_ci"])}</div>')
     if overview.get("gua_explanation"):
         out.append(f'<div class="card"><div class="ct">卦象推演</div>'
                    f'<p>{esc(overview["gua_explanation"])}</p></div>')
     if overview.get("moving_explanation"):
-        out.append(f'<div class="card"><div class="ct">動爻推演</div>'
+        out.append(f'<div class="card"><div class="ct">动爻推演</div>'
                    f'<p>{esc(overview["moving_explanation"])}</p></div>')
     return "".join(out)
 
@@ -437,7 +437,7 @@ def render_sections(sections):
 
 def render_verdict(verdict):
     paras = "".join(f"<p>{link_terms(esc(p))}</p>" for p in verdict)
-    return f'<div class="verdict"><div class="verdict-title">斷　曰</div><div class="verdict-body">{paras}</div></div>'
+    return f'<div class="verdict"><div class="verdict-title">断　曰</div><div class="verdict-body">{paras}</div></div>'
 
 
 def generate_html(case, board):
@@ -456,36 +456,36 @@ def generate_html(case, board):
   <div class="seal">卦</div>
   <div class="title-sub">六爻卦象解析</div>
   <h1 class="title-main">{esc(case['subtitle'].split(' · ')[0])}</h1>
-  <div class="divider"><span>✦</span><span>九二爻動 · 變</span><span>✦</span></div>
-  <h1 class="title-main red">{esc(board.changed_hexagram or '變卦')}</h1>
+  <div class="divider"><span>✦</span><span>九二爻动 · 变</span><span>✦</span></div>
+  <h1 class="title-main red">{esc(board.changed_hexagram or '变卦')}</h1>
   <div class="header-meta">{header_meta}</div>
 </header>
 
 <div class="section">
-  <div class="section-title"><div class="num">壹</div><h2>卦象總覽</h2><div class="line"></div></div>
+  <div class="section-title"><div class="num">壹</div><h2>卦象总览</h2><div class="line"></div></div>
   {render_meta_bar(board)}
   {render_hex_diagram(board)}
   {render_overview(case.get("overview"))}
 </div>
 
 <div class="section">
-  <div class="section-title"><div class="num">貳</div><h2>分層解析</h2><div class="line"></div></div>
+  <div class="section-title"><div class="num">贰</div><h2>分层解析</h2><div class="line"></div></div>
   {render_sections(case['sections'])}
 </div>
 
 <div class="section">
-  <div class="section-title"><div class="num">叁</div><h2>整體推演 · 斷語</h2><div class="line"></div></div>
+  <div class="section-title"><div class="num">叁</div><h2>整体推演 · 断语</h2><div class="line"></div></div>
   {render_verdict(case['verdict'])}
 </div>
 
 <div class="summary">
-  <h3>一語總括</h3>
+  <h3>一语总括</h3>
   <p>{link_terms(esc(case['summary']))}</p>
 </div>
 
 <div class="notice">※ 理性提醒 ※<br>{esc(case.get('disclaimer', ''))}</div>
 
-<div class="footer">六爻卦象解析報告<span class="orn">✦</span>{esc(case['subtitle'])}<span class="orn">✦</span>僅供參考</div>
+<div class="footer">六爻卦象解析报告<span class="orn">✦</span>{esc(case['subtitle'])}<span class="orn">✦</span>仅供参考</div>
 
 <div id="termPop" class="popover"></div>
 {JS_BLOCK}
