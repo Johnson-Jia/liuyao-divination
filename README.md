@@ -1,8 +1,8 @@
-# Liuyao Divination · 六爻占卜
+# 六爻占卜 · Liuyao Divination
 
-> An AI-agent skill + programmatic toolkit for **Liu Yao (六爻)** — traditional Chinese hexagram divination. It casts the board correctly and reasons about it with a complete, internally-consistent interpretive methodology.
+> 面向 AI Agent 的**六爻占卜技能** + **可编程排盘工具包**。既能把卦排准，又能用一套完整、自洽的断卦方法去解读它。
 >
-> 📖 **简体中文文档请见 [README.zh-CN.md](./README.zh-CN.md)**
+> 📖 **English: see [README.en.md](./README.en.md)**
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
 [![Python](https://img.shields.io/badge/python-3.9+-blue.svg)](https://www.python.org/)
@@ -10,138 +10,138 @@
 
 ---
 
-## ✨ What this is
+## ✨ 这是什么
 
-Liu Yao (六爻 / "Six Lines") is a traditional Chinese divination system built on the 64 hexagrams of the *I Ching*. A reading assigns each of the six lines a stem-branch (纳甲), a "six-relation" (六亲), a spirit (六神), a world/response position (世应), and then judges fortune by analyzing strength (旺衰), void (空亡), breaks (破), dark-movement (暗动), transformations (化进/化退), combinations (三合/六合), and graveyards (墓库) against the month and day of casting.
+六爻（六爻卦）是以《易经》六十四卦为基础的传统占卜体系。一卦排定后，给六爻配上纳甲（天干地支）、六亲、六神、世应，再结合占卦的**月建、日辰**，通过旺衰、空亡、破、暗动、化进化退、三合六合、墓库等技法来判断吉凶。
 
-This project gives you **two things**:
+本项目提供**两样东西**：
 
-1. **A `SKILL.md` agent skill** — teaches an LLM agent (Claude Code, etc.) the full interpretive workflow so it can read a board the way a trained practitioner does: select the Significant Line, weigh strength, distinguish dark-move from day-break, tell "noble" (贵) apart from "strong" (旺), and so on.
-2. **A Python casting engine + report generator** — removes the mechanical error-prone part (纳甲, 六亲, 空亡, 暗动, 化退…) by computing the board deterministically, then renders an ornate classical-style HTML report.
+1. **`SKILL.md` 智能体技能**：教 LLM（如 Claude Code）按训练有素的断卦流程读卦——取用神、断旺衰、辨暗动与日破、分清"贵"与"旺"等等。
+2. **Python 排盘引擎 + 报告生成器**：把最容易出错、最机械的部分（纳甲、六亲、空亡、暗动、化退……）交给程序确定性计算，再渲染一份古典卷宗风格的 HTML 报告。
 
-## 🧭 Why
+## 🧭 为什么做这个
 
-Manual casting is where most readings go wrong — a mis-assigned palace, a missed dark-move, a graveyard mistaken for a break. The engine computes the board; the skill handles the judgment that requires actual reasoning. Together they keep the *mechanics* honest so the *interpretation* has solid ground.
+手工排盘是大多数卦断错的根源——宫位排错、漏判暗动、把墓库当破……引擎负责把卦**排准**，技能负责**需要推理的判断**。两者配合，让"机械部分"诚实可靠，"解读部分"才有扎实的根基。
 
-## 📦 Repository structure
+## 📦 项目结构
 
 ```
 liuyao-divination/
-├── skill/liuyao-divination/SKILL.md   # The agent skill (start here)
-├── references/                        # 11 methodology monographs (Chinese)
-│   ├── 01-装卦排盘.md                  #   casting & assignment
-│   ├── 02-用神取用.md                  #   selecting the Significant Line
-│   ├── 03-旺衰月日.md                  #   strength via month & day
-│   ├── 04-动静暗破.md                  #   move / dark-move / break / void
-│   ├── 05-进退神化.md                  #   advancing & retreating transformation
-│   ├── 06-三合六合.md                  #   combinations
-│   ├── 07-墓库论.md                    #   graveyard & storehouse theory
-│   ├── 08-断卦步骤.md                  #   the full interpretation workflow
-│   ├── 09-四神与有力无力.md            #   four spirits & effective/ineffective
-│   ├── 10-卦变反伏.md                  #   hexagram-change, fan-yin, fu-yin
-│   └── 11-六十四卦判辞.md              #   64 hexagrams: imagery & verdicts
+├── skill/liuyao-divination/SKILL.md   # 智能体技能（从这里开始）
+├── references/                        # 11 册技法参考文档
+│   ├── 01-装卦排盘.md                  #   装卦、纳甲、六亲、世应、六神
+│   ├── 02-用神取用.md                  #   取用神
+│   ├── 03-旺衰月日.md                  #   月建日辰定旺衰
+│   ├── 04-动静暗破.md                  #   动静、暗动、月破、日破、空亡
+│   ├── 05-进退神化.md                  #   化进化退、变爻
+│   ├── 06-三合六合.md                  #   三合局、六合
+│   ├── 07-墓库论.md                    #   入墓、库墓、空墓、出墓
+│   ├── 08-断卦步骤.md                  #   完整断卦流程
+│   ├── 09-四神与有力无力.md            #   用神元神忌神仇神、有力无力
+│   ├── 10-卦变反伏.md                  #   卦变生克墓绝、反吟、伏吟
+│   └── 11-六十四卦判辞.md              #   64 卦卦象与判曰速查
 ├── src/
-│   ├── liuyao/                        # the casting engine (importable package)
-│   └── paipan.py                      # CLI: cast & print a board
+│   ├── liuyao/                        # 排盘引擎（可 import 的包）
+│   └── paipan.py                      # CLI：排盘并打印
 ├── tools/
-│   ├── generate_report.py             # HTML report generator
-│   └── extract_panji.py               # extract 64-hexagram verdicts
-├── examples/                          # validated case library (JSON)
-├── tests/                             # golden-case tests (the canonical reading)
-├── data/zhouyi.json                   # 64 卦辞 + 385 爻辞 (public-domain text)
-└── docs/易经六十四卦.md              # full source ms (with 64 hexagram images)
+│   ├── generate_report.py             # HTML 报告生成器
+│   └── extract_panji.py               # 提炼 64 卦判辞
+├── examples/                          # 已验证的卦例库（JSON）
+├── tests/                             # 黄金用例测试（经典卦例）
+├── data/zhouyi.json                   # 64 卦辞 + 385 爻辞（公有领域原文）
+└── docs/易经六十四卦.md              # 完整源稿（含 64 卦象图）
 ```
 
-## 🚀 Quick start
+## 🚀 快速开始
 
-### 1. Cast a board (CLI)
+### 1. 排盘（命令行）
 
 ```bash
 python src/paipan.py --hexagram 地泽临 --moving 2 --month 未 --day 卯
 ```
 
-Prints the full board: six relations, nayin stems, six spirits, world/response, void, month/day breaks, dark-move flags, advancing/retreating transformation, and graveyard status — all resolved against the month and day.
+打印完整卦盘：六亲、纳甲、六神、世应、空亡、月破日破、暗动标记、化进化退、墓库状态——全部结合月建日辰判定。
 
-### 2. Generate an HTML report
+### 2. 生成 HTML 报告
 
 ```bash
 python tools/generate_report.py examples/01-是否旺己-地泽临之复.json -o outputs/report.html
 ```
 
-### 3. Use as a Claude Code skill
+### 3. 作为 Claude Code 技能使用
 
 ```bash
-# symlink (or copy) the skill into your skills directory
+# 软链（或复制）到你的技能目录
 ln -s "$(pwd)/skill/liuyao-divination" ~/.claude/skills/liuyao-divination
 ```
 
-Then ask Claude something like *"占问家人介绍的对象是否旺自己，主卦地泽临九二动变复，辛卯日"* and it will follow the skill's workflow.
+然后对 Claude 说："占问家人介绍的对象是否旺自己，主卦地泽临九二动变复，辛卯日"，它就会按技能流程解读。
 
-### 4. Analyze a new hexagram (full workflow)
+### 4. 分析一个新卦（完整流程）
 
-Mechanics to the program, reasoning to the LLM — three steps:
+机械层交给程序、推理层交给 LLM，三步走：
 
 ```bash
-# ① Scaffold: cast board + fetch hexagram/line texts + emit JSON skeleton + print a reasoning brief
+# ① 脚手架：排盘 + 取卦辞爻辞 + 生成 JSON 骨架 + 打印推理 brief
 python tools/new_case.py --hexagram 雷水解 --moving 3 --month 申 --day 甲子 \
     --question "占求职能否成" --yongshen 官鬼 -o examples/02-求职.json
 
-# ② LLM reasoning: hand the brief to Claude, fill the JSON per SKILL.md's 8-step flow
-#    (overview / sections / verdict / summary) — let the model do the imagery,
-#    six-line analysis, and outcome推演
+# ② LLM 推理：把 brief 交给 Claude，依 SKILL.md 八步流程填充 JSON 的
+#    overview 讲解 / sections 分层解析 / verdict 断语 / summary
+#    （卦象推理、六爻分析、发展推演——充分发挥大模型能力）
 
-# ③ Generate report
+# ③ 生成报告
 python tools/generate_report.py examples/02-求职.json -o outputs/report.html
 ```
 
-Casting, text lookup, and key judgments (dark-move / retreating / graveyard / combinations / effective-or-not) are computed exactly by the scaffold; interpretation is the LLM's job. See `references/08-断卦步骤.md`.
+排盘、卦辞、关键判定（暗动 / 化退 / 入墓 / 三合 / 六合卦 / 元忌有力无力…）由脚手架自动算准；推理与断卦由 LLM 发挥。详见 `references/08-断卦步骤.md`。
 
-## 🧪 Correctness
+## 🧪 正确性
 
-The engine is validated against a **canonical hand-analyzed case** (`examples/01-是否旺己-地泽临之复.json`, 地泽临 → 地雷复, 辛卯日). The test suite asserts the engine reproduces every hand-derived result: 妻财亥水 as the Significant Line on line 5, 子孙酉 as a **dark-move** (not a day-break — the key distinction), 世爻丁卯 entering the 未 graveyard and retreating to 庚寅, void at 午未 with no line actually void, and so on.
+引擎用一个**手工精析的经典卦例**（`examples/01-是否旺己-地泽临之复.json`，地泽临 → 地雷复，辛卯日）来验证。测试断言引擎能复现每一条手工结论：妻财亥水为用神在五爻、子孙酉为**暗动**（而非日破——关键区别）、世爻丁卯入未墓且化退为庚寅、空亡在午未而卦中无落空之爻，等等。
 
 ```bash
 python -m pytest tests/
 ```
 
-## 📚 The methodology
+## 📚 方法论
 
-The interpretive rules encoded here favor the mainstream synthesis (《增删卜易》 lineage) and explicitly flag the fine distinctions practitioners miss:
+本项目采用主流综合派（沿《增删卜易》一脉），并**明确标出易被忽略的精细处**：
 
-- **Dark-move vs day-break**: a still line struck by the day is a *dark-move* (暗动, awakened, useful) if **strong**, but a *day-break* (日破, shattered, useless) if **weak**. Same strike, opposite verdict.
-- **Noble ≠ strong**: a line sitting on the emperor's seat (五爻君位) is *noble* (贵), not necessarily *strong* (旺) — strength still comes from month/day.
-- **Graveyard nuance**: entering a **void graveyard** (空墓) means the entrapment is loose and escapable, not a dead end.
-- **Advancing/retreating**: 卯→寅 is a retreating spirit (退神); 寅→卯 is advancing (进神).
+- **暗动 vs 日破**：静爻被日辰冲，**旺相**者为暗动（激发起用），**休囚**者为日破（冲散无用）。同样的"冲"，结论相反。
+- **贵 ≠ 旺**：爻临五爻君位是"贵"（地位尊显），不等于"旺"（力量强旺）——旺衰仍看月日。
+- **墓库细节**：入"空墓"（墓库落空亡）意味着困束是虚的、易脱的，不是死局。
+- **进退神**：卯化寅为退神，寅化卯为进神。
 
-See [`references/`](./references) for the full treatment and [`SKILL.md`](./skill/liuyao-divination/SKILL.md) for the workflow.
+详见 [`references/`](./references) 各册与 [`SKILL.md`](./skill/liuyao-divination/SKILL.md)。
 
-## 🤝 Contributing
+## 🤝 贡献
 
-Corrections to the engine's casting logic or the methodology docs are very welcome — accuracy is the whole point. Please open an issue first for substantive methodological changes (different lineages disagree, and we should pick deliberately).
+欢迎对排盘逻辑或技法文档提出修正——**准确性是本项目的全部意义**。涉及实质性的方法论变更（不同流派会有分歧），请先开 issue 讨论，再慎重取舍。
 
-## ⚠️ Disclaimer
+## ⚠️ 理性声明
 
-Liu Yao is a **traditional cultural and divinatory practice**, not a science. This project is an engineering and cultural-preservation effort. Readings describe tendencies, imagery, and timing — they are **not predictions of fact** and must not replace real-world judgment in relationships, finances, health, or any decision. Use responsibly.
+六爻是**传统文化与占卜术**，不是科学。本项目是一项工程与文化保存的努力。卦象描述的是"势、象、时机"，**不是事实预测**，绝不能替代现实中对感情、财务、健康及任何决策的理性判断。请理性参考、负责任地使用。
 
-## 💖 Support This Project
+## 💖 支持这个项目
 
-This is a free, open-source project built in my spare time. If you find it useful, consider buying me a coffee — entirely voluntary.
+这是我利用业余时间开发的免费开源项目。如果你觉得它有用，可以请我喝杯咖啡——完全是自愿的。
 
-Your support helps me:
-- 📚 Expand the validated case library and verify more hexagram interpretations
-- 🔧 Maintain the casting engine's accuracy across all 64 hexagrams
-- ☯️ Compare and document more Liu Yao lineages (不同流派) of the methodology
+你的支持能帮我：
+- 📚 扩充更多验证卦例、校验更多卦象的断法
+- 🔧 维护排盘引擎在六十四卦上的准确性
+- ☯️ 对照梳理更多六爻流派（不同师承）的方法论
 
-Thank you to every supporter ❤️
+感谢每一位支持者 ❤️
 
 <div align="center">
 
-| Alipay | WeChat |
+| 支付宝 | 微信 |
 |:---:|:---:|
-| <img src="docs/images/ali_pay_qrcode.jpg" width="200" alt="Alipay"> | <img src="docs/images/wechat_pay_qrcode.png" width="200" alt="WeChat"> |
+| <img src="docs/images/ali_pay_qrcode.jpg" width="200" alt="支付宝"> | <img src="docs/images/wechat_pay_qrcode.png" width="200" alt="微信"> |
 
 </div>
 
-## 📄 License
+## 📄 许可证
 
 [MIT](./LICENSE) © 2026 Johnson
