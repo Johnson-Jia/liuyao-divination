@@ -97,6 +97,25 @@ Corrections to the engine's casting logic or the methodology docs are very welco
 
 Liu Yao is a **traditional cultural and divinatory practice**, not a science. This project is an engineering and cultural-preservation effort. Readings describe tendencies, imagery, and timing — they are **not predictions of fact** and must not replace real-world judgment in relationships, finances, health, or any decision. Use responsibly.
 
+## 💖 Support This Project
+
+This is a free, open-source project built in my spare time. If you find it useful, consider buying me a coffee — entirely voluntary.
+
+Your support helps me:
+- 📚 Expand the validated case library and verify more hexagram interpretations
+- 🔧 Maintain the casting engine's accuracy across all 64 hexagrams
+- ☯️ Compare and document more Liu Yao lineages (不同流派) of the methodology
+
+Thank you to every supporter ❤️
+
+<div align="center">
+
+| Alipay | WeChat |
+|:---:|:---:|
+| <img src="docs/images/ali_pay_qrcode.jpg" width="200" alt="Alipay"> | <img src="docs/images/wechat_pay_qrcode.png" width="200" alt="WeChat"> |
+
+</div>
+
 ## 📄 License
 
 [MIT](./LICENSE) © 2026 Johnson
