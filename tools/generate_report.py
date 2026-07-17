@@ -95,6 +95,13 @@ body{
 .card .cs{font-size:13px;color:var(--vermilion);margin-bottom:12px;letter-spacing:1px;font-weight:600}
 .card p{color:var(--ink-soft);margin-bottom:10px;text-align:justify}
 .card p:last-child{margin-bottom:0}
+.ci-block{background:var(--paper-light);border:1px solid var(--border);border-radius:6px;padding:16px 20px;margin-bottom:14px}
+.ci-cap{font-family:'KaiTi',serif;font-size:16px;color:var(--vermilion);letter-spacing:6px;margin-bottom:12px;text-align:center}
+.ci-item{padding:10px 0;border-bottom:1px dashed var(--border)}
+.ci-item:last-child{border-bottom:none}
+.ci-label{font-size:13px;color:var(--ink-fade);margin-bottom:5px;letter-spacing:1px}
+.ci-text{font-family:'KaiTi','STKaiti',serif;font-size:17px;color:var(--ink);margin-bottom:6px;letter-spacing:1px;line-height:1.7}
+.ci-note{font-size:13.5px;color:var(--ink-soft);line-height:1.85}
 .mini-table{width:100%;border-collapse:collapse;margin:10px 0;font-size:14px}
 .mini-table td{padding:8px 10px;border-bottom:1px dashed var(--border);vertical-align:top}
 .mini-table td:first-child{color:var(--vermilion);font-weight:600;white-space:nowrap}
@@ -213,6 +220,35 @@ def render_params(board):
     return f'<div class="params">{"".join(items)}</div>'
 
 
+def render_overview(overview):
+    """渲染卦象总览的卦辞/爻辞 + 卦象/动爻 LLM 推演讲解。"""
+    if not overview:
+        return ""
+    out = []
+
+    def ci_items(items):
+        return "".join(
+            f'<div class="ci-item"><div class="ci-label">{esc(c["label"])}</div>'
+            f'<div class="ci-text">{esc(c["text"])}</div>'
+            f'<div class="ci-note">{esc(c["note"])}</div></div>'
+            for c in items
+        )
+
+    if overview.get("gua_ci"):
+        out.append(f'<div class="ci-block"><div class="ci-cap">卦　辭</div>'
+                   f'{ci_items(overview["gua_ci"])}</div>')
+    if overview.get("yao_ci"):
+        out.append(f'<div class="ci-block"><div class="ci-cap">動爻爻辭</div>'
+                   f'{ci_items(overview["yao_ci"])}</div>')
+    if overview.get("gua_explanation"):
+        out.append(f'<div class="card"><div class="ct">卦象推演</div>'
+                   f'<p>{esc(overview["gua_explanation"])}</p></div>')
+    if overview.get("moving_explanation"):
+        out.append(f'<div class="card"><div class="ct">動爻推演</div>'
+                   f'<p>{esc(overview["moving_explanation"])}</p></div>')
+    return "".join(out)
+
+
 def render_sections(sections):
     out = []
     for sec in sections:
@@ -271,8 +307,9 @@ def generate_html(case, board):
 <div class="section">
   <div class="section-title"><div class="num">壹</div><h2>卦象總覽</h2><div class="line"></div></div>
   {render_hex_diagram(board)}
-  {render_board_table(board)}
+  {render_overview(case.get("overview"))}
   {render_params(board)}
+  {render_board_table(board)}
 </div>
 
 <div class="section">
