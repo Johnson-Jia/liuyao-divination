@@ -273,10 +273,13 @@ def render_hex_diagram(board):
         return {"shen": c["shen"], "qin": c["qin"], "gan": c["gan"], "zhi": c["zhi"],
                 "tags": tags}
 
+    from liuyao.data import find_hexagram
+    ch_rec = find_hexagram(board.changed_hexagram) if board.changed_hexagram else None
+    ch_pal = f'{ch_rec["palace"]}宫·{ch_rec["palace_wx"]}' if ch_rec else "—"
     left_title = board.hexagram + suffix(board.is_liuhe_gua, board.is_liuchong_gua)
     right_title = (board.changed_hexagram or "变卦") + suffix(board.changed_is_liuhe, board.changed_is_liuchong)
-    left = block(left_title, "主卦", yin_yangs, moving_set, main_info)
-    right = block(right_title, "变卦", changed_yy, moving_set, changed_info)
+    left = block(left_title, f"主卦 · {board.palace}宫·{board.palace_wx}", yin_yangs, moving_set, main_info)
+    right = block(right_title, f"变卦 · {ch_pal}", changed_yy, moving_set, changed_info)
     mid = f'<div class="hex-mid"><div class="arrow">➜</div>{render_gua_tags(board)}</div>'
     return f'<div class="hex-display">{left}{mid}{right}</div>'
 
