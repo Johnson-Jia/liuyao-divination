@@ -63,13 +63,14 @@ body{
 .gua-name{font-family:'KaiTi',serif;font-size:24px;color:var(--ink);margin-bottom:6px;letter-spacing:2px}
 .gua-tag{font-size:12px;color:var(--ink-fade);margin-bottom:16px;letter-spacing:2px}
 .hex-lines{display:flex;flex-direction:column;gap:9px;align-items:center}
-.yao{display:flex;align-items:center;gap:10px;width:268px}
-.yao .pos{font-size:11px;color:var(--ink-fade);width:30px;text-align:right;flex-shrink:0}
-.yao .bars{width:90px;display:flex;justify-content:space-between;align-items:center;height:9px;flex-shrink:0}
+.yao{display:flex;align-items:center;gap:8px;width:300px}
+.yao .yleft{font-size:11.5px;color:var(--ink-soft);width:78px;text-align:right;flex-shrink:0;white-space:nowrap}
+.yao .pos{font-size:11px;color:var(--ink-fade);width:30px;text-align:center;flex-shrink:0}
+.yao .bars{width:80px;display:flex;justify-content:space-between;align-items:center;height:9px;flex-shrink:0}
 .yao .bars .b{height:9px;background:var(--ink);border-radius:1px}
-.yao .bars.solid .b{width:90px}
-.yao .bars.split .b{width:40px}
-.yinfo{font-size:11.5px;color:var(--ink-soft);letter-spacing:.5px;white-space:nowrap}
+.yao .bars.solid .b{width:80px}
+.yao .bars.split .b{width:36px}
+.yao .yright{font-size:12px;color:var(--ink);width:42px;flex-shrink:0;white-space:nowrap;font-weight:600}
 .yao.moving .b{background:var(--vermilion);box-shadow:0 0 8px rgba(158,43,37,.4)}
 .yao.moving .pos{color:var(--vermilion);font-weight:600}
 .arrow{font-size:34px;color:var(--gold)}
@@ -163,11 +164,11 @@ def render_hex_diagram(board):
                     else '<div class="bars split"><span class="b"></span><span class="b"></span></div>')
             yao_cls = "yao moving" if mv else "yao"
             info = info_of(pos)
-            info_html = (f'<span class="yinfo">{esc(info["shen"])} · {esc(info["qin"])} · '
-                         f'{esc(info["gan"])}{esc(info["zhi"])}</span>')
+            left_html = f'<span class="yleft">{esc(info["shen"])}·{esc(info["qin"])}</span>'
+            right_html = f'<span class="yright">{esc(info["gan"])}{esc(info["zhi"])}</span>'
             rows.append(
-                f'<div class="{yao_cls}"><span class="pos">{esc(pos_label)}</span>'
-                f'{bars}{info_html}</div>'
+                f'<div class="{yao_cls}">{left_html}<span class="pos">{esc(pos_label)}</span>'
+                f'{bars}{right_html}</div>'
             )
         return (f'<div class="hex-block"><div class="gua-name">{esc(title)}</div>'
                 f'<div class="gua-tag">{esc(tag)}</div>'
