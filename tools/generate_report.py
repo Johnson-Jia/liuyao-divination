@@ -63,14 +63,16 @@ body{
 .gua-name{font-family:'KaiTi',serif;font-size:24px;color:var(--ink);margin-bottom:6px;letter-spacing:2px}
 .gua-tag{font-size:12px;color:var(--ink-fade);margin-bottom:16px;letter-spacing:2px}
 .hex-lines{display:flex;flex-direction:column;gap:9px;align-items:center}
-.yao{display:flex;align-items:center;gap:8px;width:300px}
-.yao .yleft{font-size:11.5px;color:var(--ink-soft);width:78px;text-align:right;flex-shrink:0;white-space:nowrap}
-.yao .pos{font-size:11px;color:var(--ink-fade);width:30px;text-align:center;flex-shrink:0}
-.yao .bars{width:80px;display:flex;justify-content:space-between;align-items:center;height:9px;flex-shrink:0}
+.yao{display:flex;align-items:center;gap:7px;width:392px;min-height:26px}
+.yao .yleft{font-size:11px;color:var(--ink-soft);width:74px;text-align:right;flex-shrink:0;white-space:nowrap}
+.yao .pos{font-size:11px;color:var(--ink-fade);width:26px;text-align:center;flex-shrink:0}
+.yao .bars{width:66px;display:flex;justify-content:space-between;align-items:center;height:9px;flex-shrink:0}
 .yao .bars .b{height:9px;background:var(--ink);border-radius:1px}
-.yao .bars.solid .b{width:80px}
-.yao .bars.split .b{width:36px}
-.yao .yright{font-size:12px;color:var(--ink);width:42px;flex-shrink:0;white-space:nowrap;font-weight:600}
+.yao .bars.solid .b{width:66px}
+.yao .bars.split .b{width:30px}
+.yao .yright{font-size:12px;color:var(--ink);width:40px;flex-shrink:0;white-space:nowrap;font-weight:600}
+.yao .ytags{width:150px;display:flex;flex-wrap:wrap;gap:2px;align-items:center}
+.yao .ytag{font-size:9.5px;padding:1px 4px;border-radius:2px;background:rgba(158,43,37,.1);color:var(--vermilion);white-space:nowrap;line-height:1.4}
 .yao.moving .b{background:var(--vermilion);box-shadow:0 0 8px rgba(158,43,37,.4)}
 .yao.moving .pos{color:var(--vermilion);font-weight:600}
 .arrow{font-size:34px;color:var(--gold)}
@@ -166,9 +168,10 @@ def render_hex_diagram(board):
             info = info_of(pos)
             left_html = f'<span class="yleft">{esc(info["shen"])}·{esc(info["qin"])}</span>'
             right_html = f'<span class="yright">{esc(info["gan"])}{esc(info["zhi"])}</span>'
+            tag_html = "".join(f'<span class="ytag">{esc(t)}</span>' for t in info.get("tags", []))
             rows.append(
                 f'<div class="{yao_cls}">{left_html}<span class="pos">{esc(pos_label)}</span>'
-                f'{bars}{right_html}</div>'
+                f'{bars}{right_html}<span class="ytags">{tag_html}</span></div>'
             )
         return (f'<div class="hex-block"><div class="gua-name">{esc(title)}</div>'
                 f'<div class="gua-tag">{esc(tag)}</div>'
@@ -181,12 +184,16 @@ def render_hex_diagram(board):
 
     def main_info(pos):
         ln = board.line(pos)
-        return {"shen": ln.shen, "qin": ln.qin, "gan": ln.gan, "zhi": ln.zhi}
+        return {"shen": ln.shen, "qin": ln.qin, "gan": ln.gan, "zhi": ln.zhi,
+                "tags": ln.label()}
 
     ch = board.changed_line_info()
     def changed_info(pos):
         c = ch[pos - 1]
-        return {"shen": c["shen"], "qin": c["qin"], "gan": c["gan"], "zhi": c["zhi"]}
+        m = board.line(pos)
+        tags = [m.jin_tui] if (m.is_moving and m.jin_tui) else []
+        return {"shen": c["shen"], "qin": c["qin"], "gan": c["gan"], "zhi": c["zhi"],
+                "tags": tags}
 
     left_title = board.hexagram + suffix(board.is_liuhe_gua, board.is_liuchong_gua)
     right_title = (board.changed_hexagram or "變卦") + suffix(board.changed_is_liuhe, board.changed_is_liuchong)
@@ -367,7 +374,6 @@ def generate_html(case, board):
   <div class="section-title"><div class="num">壹</div><h2>卦象總覽</h2><div class="line"></div></div>
   {render_hex_diagram(board)}
   {render_gua_tags(board)}
-  {render_board_table(board)}
   {render_params(board)}
   {render_overview(case.get("overview"))}
 </div>
