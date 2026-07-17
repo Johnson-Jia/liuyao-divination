@@ -58,22 +58,61 @@ def liuqin(yao_wx, palace_wx):
     return "兄弟"
 
 
-def yongshen_role(yao_qin, yongshen_qin):
-    """该爻相对用神的角色：元神(生用)/忌神(克用)/用神/仇神(克元生忌...简化)/闲神。"""
-    if yao_qin == yongshen_qin:
+def four_gods(yongshen_wx):
+    """以用神五行为基准，返回四神的五行。
+
+    用=本身；元=生用者(sheng_me)；忌=克用者(ke_me)；仇=克元者(=生忌者)。
+    例：用=金 → 元=土, 忌=火, 仇=木(克土生火)。
+    """
+    yuan = sheng_me(yongshen_wx)
+    ji = ke_me(yongshen_wx)
+    chou = ke_me(yuan)  # 克元神者；亦 = sheng_me(ji) 生忌神者
+    return {"用": yongshen_wx, "元": yuan, "忌": ji, "仇": chou}
+
+
+def yongshen_role(yao_wx, yongshen_wx):
+    """该爻(按五行)相对用神爻(按五行)的四神角色：用/元/忌/仇/闲。
+
+    注意：以【用神爻的五行】为基准（非六亲），这才符合"元生用、忌克用、仇克元生忌"的定义。
+    """
+    if yao_wx == yongshen_wx:
         return "用神"
-    # 六亲生克链：父母→克子孙→克官鬼? 标准六亲生克：
-    #   父母 生 兄弟 生 子孙 生 妻财 生 官鬼 生 父母（相生环）
-    #   父母 克 子孙，子孙 克 官鬼，官鬼 克 兄弟，兄弟 克 妻财，妻财 克 父母（相克环）
-    sheng_chain = {"父母": "兄弟", "兄弟": "子孙", "子孙": "妻财",
-                   "妻财": "官鬼", "官鬼": "父母"}
-    ke_chain = {"父母": "子孙", "子孙": "官鬼", "官鬼": "兄弟",
-                "兄弟": "妻财", "妻财": "父母"}
-    if sheng_chain.get(yao_qin) == yongshen_qin:
-        return "元神"   # 生用神
-    if ke_chain.get(yao_qin) == yongshen_qin:
-        return "忌神"   # 克用神
+    g = four_gods(yongshen_wx)
+    if yao_wx == g["元"]:
+        return "元神"
+    if yao_wx == g["忌"]:
+        return "忌神"
+    if yao_wx == g["仇"]:
+        return "仇神"
     return "闲神"
+
+
+# ----------------------------------------------------------------
+# 真空（旬空 + 当令死地）
+# ----------------------------------------------------------------
+# 真空：春土、夏金、秋木、冬火（《增删卜易·旬空章》）
+_TRUE_VOID = {
+    "春": "土", "夏": "金", "秋": "木", "冬": "火",
+}
+
+
+def season_of(month_zhi):
+    """月支 → 季节。四季月(辰戌丑未)返回 '季'（土当令，无真空）。"""
+    if month_zhi in ("寅", "卯"):
+        return "春"
+    if month_zhi in ("巳", "午"):
+        return "夏"
+    if month_zhi in ("申", "酉"):
+        return "秋"
+    if month_zhi in ("亥", "子"):
+        return "冬"
+    return "季"  # 辰戌丑未
+
+
+def is_true_void(yao_wx, month_zhi):
+    """爻是否为'真空'：落旬空且其五行恰为当季真空之五行。须配合 is_void 使用。"""
+    season = season_of(month_zhi)
+    return _TRUE_VOID.get(season) == yao_wx
 
 
 # ----------------------------------------------------------------
