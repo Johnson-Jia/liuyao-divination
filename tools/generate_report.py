@@ -32,7 +32,7 @@ body{
   font-family:'Noto Serif SC','Songti SC','SimSun',serif;
   background:radial-gradient(circle at 20% 10%,rgba(168,124,42,.06),transparent 40%),
              radial-gradient(circle at 80% 90%,rgba(158,43,37,.05),transparent 45%),var(--paper);
-  color:var(--ink);line-height:1.85;font-size:16px;padding:40px 20px 60px;
+  color:var(--ink);line-height:1.9;font-size:17.5px;padding:40px 20px 60px;
 }
 .wrap{max-width:920px;margin:0 auto}
 .header{text-align:center;padding:50px 30px 40px;background:linear-gradient(180deg,var(--paper-light),var(--paper));
@@ -48,8 +48,8 @@ body{
 .divider::before,.divider::after{content:"";height:1px;width:90px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
 .info-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin:24px 0}
 .info-card{background:var(--paper-light);border:1px solid var(--border);border-left:3px solid var(--gold);border-radius:4px;padding:16px 18px}
-.info-card .label{font-size:12px;color:var(--ink-fade);letter-spacing:2px;margin-bottom:6px}
-.info-card .value{font-size:16px;color:var(--ink);font-weight:600}
+.info-card .label{font-size:13.5px;color:var(--ink-fade);letter-spacing:2px;margin-bottom:6px}
+.info-card .value{font-size:17.5px;color:var(--ink);font-weight:600}
 .info-card .value .accent{color:var(--vermilion)}
 .section{margin:42px 0 20px}
 .section-title{display:flex;align-items:center;gap:14px;margin-bottom:20px}
@@ -63,19 +63,19 @@ body{
 .hex-mid{display:flex;flex-direction:column;align-items:center;gap:8px;flex-shrink:0;max-width:100px}
 .hex-mid .gua-tags{margin:0;text-align:center}
 .hex-mid .gua-tags .tag{display:block;margin:3px 0;font-size:11px;letter-spacing:1px}
-.gua-name{font-family:'KaiTi',serif;font-size:24px;color:var(--ink);margin-bottom:6px;letter-spacing:2px}
-.gua-tag{font-size:12px;color:var(--ink-fade);margin-bottom:16px;letter-spacing:2px}
+.gua-name{font-family:'KaiTi',serif;font-size:26px;color:var(--ink);margin-bottom:6px;letter-spacing:2px}
+.gua-tag{font-size:13.5px;color:var(--ink-fade);margin-bottom:16px;letter-spacing:2px}
 .hex-lines{display:flex;flex-direction:column;gap:9px;align-items:center}
-.yao{display:flex;align-items:center;gap:6px;width:356px;min-height:26px}
-.yao .yleft{font-size:11px;color:var(--ink-soft);width:68px;text-align:right;flex-shrink:0;white-space:nowrap}
-.yao .pos{font-size:11px;color:var(--ink-fade);width:24px;text-align:center;flex-shrink:0}
-.yao .bars{width:60px;display:flex;justify-content:space-between;align-items:center;height:9px;flex-shrink:0}
-.yao .bars .b{height:9px;background:var(--ink);border-radius:1px}
-.yao .bars.solid .b{width:60px}
-.yao .bars.split .b{width:28px}
-.yao .yright{font-size:12px;color:var(--ink);width:38px;flex-shrink:0;white-space:nowrap;font-weight:600}
-.yao .ytags{width:132px;display:flex;flex-wrap:wrap;gap:2px;align-items:center}
-.yao .ytag{font-size:9.5px;padding:1px 4px;border-radius:2px;background:rgba(158,43,37,.1);color:var(--vermilion);white-space:nowrap;line-height:1.4}
+.yao{display:flex;align-items:center;gap:7px;width:368px;min-height:28px}
+.yao .yleft{font-size:13px;color:var(--ink-soft);width:80px;text-align:right;flex-shrink:0;white-space:nowrap}
+.yao .pos{font-size:13px;color:var(--ink-fade);width:28px;text-align:center;flex-shrink:0}
+.yao .bars{width:64px;display:flex;justify-content:space-between;align-items:center;height:10px;flex-shrink:0}
+.yao .bars .b{height:10px;background:var(--ink);border-radius:1px}
+.yao .bars.solid .b{width:64px}
+.yao .bars.split .b{width:30px}
+.yao .yright{font-size:14px;color:var(--ink);width:44px;flex-shrink:0;white-space:nowrap;font-weight:600}
+.yao .ytags{width:124px;display:flex;flex-wrap:wrap;gap:2px;align-items:center}
+.yao .ytag{font-size:10.5px;padding:1px 5px;border-radius:2px;background:rgba(158,43,37,.1);color:var(--vermilion);white-space:nowrap;line-height:1.4}
 .yao.moving .b{background:var(--vermilion);box-shadow:0 0 8px rgba(158,43,37,.4)}
 .yao.moving .pos{color:var(--vermilion);font-weight:600}
 .arrow{font-size:34px;color:var(--gold)}
@@ -94,21 +94,21 @@ body{
 .tag-gold{background:rgba(168,124,42,.15);color:var(--gold)}
 .params{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:10px;margin:20px 0}
 .param{background:var(--paper-light);border:1px solid var(--border);border-radius:4px;padding:12px 14px;text-align:center}
-.param .k{font-size:11px;color:var(--ink-fade);letter-spacing:2px;margin-bottom:4px}
-.param .v{font-size:14px;color:var(--ink);font-weight:600}
+.param .k{font-size:12.5px;color:var(--ink-fade);letter-spacing:2px;margin-bottom:4px}
+.param .v{font-size:15.5px;color:var(--ink);font-weight:600}
 .param .v.red{color:var(--vermilion)}
 .card{background:var(--paper-light);border:1px solid var(--border);border-radius:6px;padding:22px 26px;margin-bottom:16px}
-.card .ct{font-family:'KaiTi',serif;font-size:21px;color:var(--ink);margin-bottom:4px;letter-spacing:2px}
-.card .cs{font-size:13px;color:var(--vermilion);margin-bottom:12px;letter-spacing:1px;font-weight:600}
+.card .ct{font-family:'KaiTi',serif;font-size:22.5px;color:var(--ink);margin-bottom:4px;letter-spacing:2px}
+.card .cs{font-size:14.5px;color:var(--vermilion);margin-bottom:12px;letter-spacing:1px;font-weight:600}
 .card p{color:var(--ink-soft);margin-bottom:10px;text-align:justify}
 .card p:last-child{margin-bottom:0}
 .ci-block{background:var(--paper-light);border:1px solid var(--border);border-radius:6px;padding:16px 20px;margin-bottom:14px}
-.ci-cap{font-family:'KaiTi',serif;font-size:16px;color:var(--vermilion);letter-spacing:6px;margin-bottom:12px;text-align:center}
+.ci-cap{font-family:'KaiTi',serif;font-size:17.5px;color:var(--vermilion);letter-spacing:6px;margin-bottom:12px;text-align:center}
 .ci-item{padding:10px 0;border-bottom:1px dashed var(--border)}
 .ci-item:last-child{border-bottom:none}
-.ci-label{font-size:13px;color:var(--ink-fade);margin-bottom:5px;letter-spacing:1px}
-.ci-text{font-family:'KaiTi','STKaiti',serif;font-size:17px;color:var(--ink);margin-bottom:6px;letter-spacing:1px;line-height:1.7}
-.ci-note{font-size:13.5px;color:var(--ink-soft);line-height:1.85}
+.ci-label{font-size:14.5px;color:var(--ink-fade);margin-bottom:5px;letter-spacing:1px}
+.ci-text{font-family:'KaiTi','STKaiti',serif;font-size:18.5px;color:var(--ink);margin-bottom:6px;letter-spacing:1px;line-height:1.7}
+.ci-note{font-size:15px;color:var(--ink-soft);line-height:1.85}
 .gua-tags{text-align:center;margin:-6px 0 20px}
 .gua-tags .tag{font-size:13px;padding:3px 10px}
 .mini-table{width:100%;border-collapse:collapse;margin:10px 0;font-size:14px}
@@ -117,14 +117,14 @@ body{
 .verdict{background:linear-gradient(180deg,#3a2f22,#2b2218);border:2px solid var(--gold);border-radius:8px;
   padding:40px 38px;margin:30px 0;color:#f0e6d0;box-shadow:0 8px 30px rgba(40,30,15,.25)}
 .verdict-title{text-align:center;font-family:'KaiTi',serif;font-size:30px;color:var(--gold-bright);letter-spacing:10px;margin-bottom:28px}
-.verdict-body{font-size:16px;line-height:2.1;color:#e8dcc2;text-indent:2em;text-align:justify}
+.verdict-body{font-size:17.5px;line-height:2.1;color:#e8dcc2;text-indent:2em;text-align:justify}
 .verdict-body p{margin-bottom:14px}
 .verdict-body p:last-child{margin-bottom:0}
 .summary{background:linear-gradient(135deg,rgba(158,43,37,.06),rgba(168,124,42,.06));border:1.5px solid var(--vermilion);
   border-radius:6px;padding:28px 30px;margin:30px 0}
-.summary h3{font-family:'KaiTi',serif;font-size:22px;color:var(--vermilion);margin-bottom:12px;letter-spacing:2px}
-.summary p{color:var(--ink);font-size:16px;line-height:2}
-.notice{text-align:center;font-size:13px;color:var(--ink-fade);border-top:1px dashed var(--border);padding-top:22px;margin-top:30px;line-height:1.9}
+.summary h3{font-family:'KaiTi',serif;font-size:24px;color:var(--vermilion);margin-bottom:12px;letter-spacing:2px}
+.summary p{color:var(--ink);font-size:17.5px;line-height:2}
+.notice{text-align:center;font-size:14.5px;color:var(--ink-fade);border-top:1px dashed var(--border);padding-top:22px;margin-top:30px;line-height:1.9}
 .footer{text-align:center;margin-top:30px;font-size:12px;color:var(--ink-fade);letter-spacing:2px}
 .footer .orn{color:var(--gold);margin:0 8px}
 @keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
