@@ -454,7 +454,7 @@ def cast_board(hexagram, moving, month_zhi, day_gz, yongshen_qin=None):
             reasons.append("日墓")
         for other in board.lines:
             if other.is_moving and other.zhi == mu and other.position != ln.position:
-                reasons.append(f"动爻{other.name}墓")
+                reasons.append("动爻墓")
         if ln.is_moving and ln.change_zhi == mu:
             reasons.append("化墓")
         ln.in_grave = reasons
