@@ -76,6 +76,8 @@ body{
 .yao .yright{font-size:14px;color:var(--ink);width:44px;flex-shrink:0;white-space:nowrap;font-weight:600}
 .yao .ytags{width:124px;display:flex;flex-wrap:wrap;gap:2px;align-items:center}
 .yao .ytag{font-size:10.5px;padding:1px 5px;border-radius:2px;background:rgba(158,43,37,.1);color:var(--vermilion);white-space:nowrap;line-height:1.4}
+.yao .ytag.shi{background:var(--ink);color:var(--paper-light);font-weight:600}
+.yao .ytag.ying{background:var(--gold);color:#fff7e8;font-weight:600}
 .yao.moving .b{background:var(--vermilion);box-shadow:0 0 8px rgba(158,43,37,.4)}
 .yao.moving .pos{color:var(--vermilion);font-weight:600}
 .arrow{font-size:34px;color:var(--gold)}
@@ -171,7 +173,11 @@ def render_hex_diagram(board):
             info = info_of(pos)
             left_html = f'<span class="yleft">{esc(info["shen"])}·{esc(info["qin"])}</span>'
             right_html = f'<span class="yright">{esc(info["gan"])}{esc(info["zhi"])}</span>'
-            tag_html = "".join(f'<span class="ytag">{esc(t)}</span>' for t in info.get("tags", []))
+            parts = []
+            for t in info.get("tags", []):
+                cls = "ytag shi" if t == "世" else ("ytag ying" if t == "应" else "ytag")
+                parts.append(f'<span class="{cls}">{esc(t)}</span>')
+            tag_html = "".join(parts)
             rows.append(
                 f'<div class="{yao_cls}">{left_html}<span class="pos">{esc(pos_label)}</span>'
                 f'{bars}{right_html}<span class="ytags">{tag_html}</span></div>'
