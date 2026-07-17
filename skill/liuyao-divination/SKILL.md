@@ -196,6 +196,7 @@ board = cast_board(hexagram="地泽临", moving_line=2, month="未", day="卯")
 - [`references/08-断卦步骤.md`](../../references/08-断卦步骤.md) — 完整断卦工作流与示例
 - [`references/09-四神与有力无力.md`](../../references/09-四神与有力无力.md) — 用神元神忌神仇神、有力无力判定
 - [`references/10-卦变反伏.md`](../../references/10-卦变反伏.md) — 卦变生克墓绝、反吟、伏吟
+- [`references/11-六十四卦判辞.md`](../../references/11-六十四卦判辞.md) — 64 卦卦象与判辞速查（主变卦卦意参考）
 
 ## Disclaimer
 

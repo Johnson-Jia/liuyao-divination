@@ -28,7 +28,7 @@
 ```
 liuyao-divination/
 ├── skill/liuyao-divination/SKILL.md   # 智能体技能（从这里开始）
-├── references/                        # 8 册技法参考文档
+├── references/                        # 11 册技法参考文档
 │   ├── 01-装卦排盘.md                  #   装卦、纳甲、六亲、世应、六神
 │   ├── 02-用神取用.md                  #   取用神
 │   ├── 03-旺衰月日.md                  #   月建日辰定旺衰
@@ -36,11 +36,16 @@ liuyao-divination/
 │   ├── 05-进退神化.md                  #   化进化退、变爻
 │   ├── 06-三合六合.md                  #   三合局、六合
 │   ├── 07-墓库论.md                    #   入墓、库墓、空墓、出墓
-│   └── 08-断卦步骤.md                  #   完整断卦流程
+│   ├── 08-断卦步骤.md                  #   完整断卦流程
+│   ├── 09-四神与有力无力.md            #   用神元神忌神仇神、有力无力
+│   ├── 10-卦变反伏.md                  #   卦变生克墓绝、反吟、伏吟
+│   └── 11-六十四卦判辞.md              #   64 卦卦象与判曰速查
 ├── src/
 │   ├── liuyao/                        # 排盘引擎（可 import 的包）
 │   └── paipan.py                      # CLI：排盘并打印
-├── tools/generate_report.py           # HTML 报告生成器
+├── tools/
+│   ├── generate_report.py             # HTML 报告生成器
+│   └── extract_panji.py               # 提炼 64 卦判辞
 ├── examples/                          # 已验证的卦例库（JSON）
 └── tests/                             # 黄金用例测试（经典卦例）
 ```

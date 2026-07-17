@@ -28,7 +28,7 @@ Manual casting is where most readings go wrong — a mis-assigned palace, a miss
 ```
 liuyao-divination/
 ├── skill/liuyao-divination/SKILL.md   # The agent skill (start here)
-├── references/                        # 8 methodology monographs (Chinese)
+├── references/                        # 11 methodology monographs (Chinese)
 │   ├── 01-装卦排盘.md                  #   casting & assignment
 │   ├── 02-用神取用.md                  #   selecting the Significant Line
 │   ├── 03-旺衰月日.md                  #   strength via month & day
@@ -36,11 +36,16 @@ liuyao-divination/
 │   ├── 05-进退神化.md                  #   advancing & retreating transformation
 │   ├── 06-三合六合.md                  #   combinations
 │   ├── 07-墓库论.md                    #   graveyard & storehouse theory
-│   └── 08-断卦步骤.md                  #   the full interpretation workflow
+│   ├── 08-断卦步骤.md                  #   the full interpretation workflow
+│   ├── 09-四神与有力无力.md            #   four spirits & effective/ineffective
+│   ├── 10-卦变反伏.md                  #   hexagram-change, fan-yin, fu-yin
+│   └── 11-六十四卦判辞.md              #   64 hexagrams: imagery & verdicts
 ├── src/
 │   ├── liuyao/                        # the casting engine (importable package)
 │   └── paipan.py                      # CLI: cast & print a board
-├── tools/generate_report.py           # HTML report generator
+├── tools/
+│   ├── generate_report.py             # HTML report generator
+│   └── extract_panji.py               # extract 64-hexagram verdicts
 ├── examples/                          # validated case library (JSON)
 └── tests/                             # golden-case tests (the canonical reading)
 ```
