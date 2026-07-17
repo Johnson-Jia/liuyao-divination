@@ -10,6 +10,7 @@
 import argparse
 import html
 import json
+import re
 import sys
 from pathlib import Path
 
@@ -17,6 +18,53 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "src"))
 
 from liuyao import cast_board
 from liuyao.format import yao_name
+
+# 术语表（点击弹解释）
+GLOSSARY = json.loads(
+    Path(__file__).resolve().parent.parent.joinpath("data", "glossary.json")
+    .read_text(encoding="utf-8")
+)
+# 长词优先匹配，避免短词误中（如"暗动"先于"动"）
+_TERM_RE = re.compile("|".join(re.escape(k) for k in sorted(GLOSSARY, key=len, reverse=True)))
+
+
+def link_terms(text):
+    """对已 esc 的纯文本，把其中术语包成可点击 span（点击弹解释浮层）。"""
+    def repl(m):
+        k = m.group(0)
+        return f'<span class="term" data-term="{k}" tabindex="0">{k}</span>'
+    return _TERM_RE.sub(repl, text)
+
+
+JS_CODE = """
+document.addEventListener('click', function(e){
+  var pop = document.getElementById('termPop');
+  if(e.target.classList.contains('pop-close')){ pop.style.display='none'; return; }
+  var t = e.target.closest('.term');
+  if(t && t.dataset.term){
+    e.stopPropagation();
+    var key = t.dataset.term, text = GLOSSARY[key];
+    if(!text) return;
+    pop.innerHTML = '<div class="pop-title">' + key + '<span class="pop-close">×</span></div><div class="pop-text">' + text + '</div>';
+    pop.style.display = 'block';
+    var rect = t.getBoundingClientRect();
+    var w = pop.offsetWidth, h = pop.offsetHeight;
+    var left = Math.min(rect.left, window.innerWidth - w - 16);
+    var top = rect.bottom + 8;
+    if(top + h > window.innerHeight - 8) top = rect.top - h - 8;
+    pop.style.left = Math.max(8, left) + 'px';
+    pop.style.top = Math.max(8, top) + 'px';
+  } else if(!pop.contains(e.target)){
+    pop.style.display = 'none';
+  }
+});
+document.addEventListener('keydown', function(e){ if(e.key==='Escape') document.getElementById('termPop').style.display='none'; });
+"""
+
+JS_BLOCK = (
+    "<script>const GLOSSARY=" + json.dumps(GLOSSARY, ensure_ascii=False) + ";</script>\n"
+    "<script>" + JS_CODE + "</script>"
+)
 
 
 CSS = """
@@ -49,6 +97,13 @@ body{
 .info-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin:24px 0}
 .header-meta{margin-top:20px;font-size:14.5px;color:var(--ink-soft);letter-spacing:1px;line-height:1.8}
 .header-meta .accent{color:var(--vermilion);font-weight:600}
+.term{cursor:pointer;color:var(--vermilion);border-bottom:1px dashed var(--vermilion)}
+.term:hover{background:rgba(158,43,37,.06)}
+.ytag.term{border-bottom:none}
+.popover{position:fixed;display:none;z-index:9999;max-width:320px;padding:14px 16px;background:#fffdf5;border:1px solid var(--border-strong);border-left:3px solid var(--vermilion);border-radius:6px;box-shadow:0 8px 28px rgba(40,30,15,.2);font-size:14px;line-height:1.75;color:var(--ink-soft)}
+.popover .pop-title{font-family:'KaiTi',serif;font-size:16px;color:var(--vermilion);margin-bottom:6px;letter-spacing:1px;display:flex;justify-content:space-between;align-items:center}
+.popover .pop-close{cursor:pointer;color:var(--ink-fade);font-size:18px;font-weight:400;margin-left:12px}
+.popover .pop-text{color:var(--ink-soft)}
 .info-card{background:var(--paper-light);border:1px solid var(--border);border-left:3px solid var(--gold);border-radius:4px;padding:16px 18px}
 .info-card .label{font-size:13.5px;color:var(--ink-fade);letter-spacing:2px;margin-bottom:6px}
 .info-card .value{font-size:17.5px;color:var(--ink);font-weight:600}
@@ -182,8 +237,17 @@ def render_hex_diagram(board):
             right_html = f'<span class="yright">{esc(info["gan"])}{esc(info["zhi"])}</span>'
             parts = []
             for t in info.get("tags", []):
-                cls = "ytag shi" if t == "世" else ("ytag ying" if t == "应" else "ytag")
-                parts.append(f'<span class="{cls}">{esc(t)}</span>')
+                if t == "世":
+                    cls = "ytag shi"
+                elif t == "应":
+                    cls = "ytag ying"
+                else:
+                    cls = "ytag"
+                dt = ""
+                if t in GLOSSARY:
+                    cls += " term"
+                    dt = f' data-term="{t}" tabindex="0"'
+                parts.append(f'<span class="{cls}"{dt}>{esc(t)}</span>')
             tag_html = "".join(parts)
             rows.append(
                 f'<div class="{yao_cls}">{left_html}<span class="pos">{esc(pos_label)}</span>'
@@ -334,7 +398,7 @@ def render_overview(overview):
         return "".join(
             f'<div class="ci-item"><div class="ci-label">{esc(c["label"])}</div>'
             f'<div class="ci-text">{esc(c["text"])}</div>'
-            f'<div class="ci-note">{esc(c["note"])}</div></div>'
+            f'<div class="ci-note">{link_terms(esc(c["note"]))}</div></div>'
             for c in items
         )
 
@@ -356,7 +420,7 @@ def render_overview(overview):
 def render_sections(sections):
     out = []
     for sec in sections:
-        paras = "".join(f"<p>{esc(pa)}</p>" for pa in sec.get("paragraphs", []))
+        paras = "".join(f"<p>{link_terms(esc(pa))}</p>" for pa in sec.get("paragraphs", []))
         table = ""
         if "table" in sec:
             t = sec["table"]
@@ -365,7 +429,7 @@ def render_sections(sections):
             for r in t["rows"]:
                 body += "<tr>" + "".join(f"<td>{esc(c)}</td>" for c in r) + "</tr>"
             table = f'<table class="mini-table"><thead><tr>{head}</tr></thead><tbody>{body}</tbody></table>'
-        after = "".join(f"<p>{esc(pa)}</p>" for pa in sec.get("paragraphs_after_table", []))
+        after = "".join(f"<p>{link_terms(esc(pa))}</p>" for pa in sec.get("paragraphs_after_table", []))
         out.append(
             f'<div class="card"><div class="ct">{esc(sec["title"])}</div>'
             f'<div class="cs">{esc(sec.get("subtitle", ""))}</div>{paras}{table}{after}</div>'
@@ -374,7 +438,7 @@ def render_sections(sections):
 
 
 def render_verdict(verdict):
-    paras = "".join(f"<p>{esc(p)}</p>" for p in verdict)
+    paras = "".join(f"<p>{link_terms(esc(p))}</p>" for p in verdict)
     return f'<div class="verdict"><div class="verdict-title">斷　曰</div><div class="verdict-body">{paras}</div></div>'
 
 
@@ -418,12 +482,15 @@ def generate_html(case, board):
 
 <div class="summary">
   <h3>一語總括</h3>
-  <p>{esc(case['summary'])}</p>
+  <p>{link_terms(esc(case['summary']))}</p>
 </div>
 
 <div class="notice">※ 理性提醒 ※<br>{esc(case.get('disclaimer', ''))}</div>
 
 <div class="footer">六爻卦象解析報告<span class="orn">✦</span>{esc(case['subtitle'])}<span class="orn">✦</span>僅供參考</div>
+
+<div id="termPop" class="popover"></div>
+{JS_BLOCK}
 
 </div></body></html>"""
 
