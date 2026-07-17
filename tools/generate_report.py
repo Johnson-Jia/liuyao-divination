@@ -57,6 +57,11 @@ body{
   font-size:18px;display:flex;align-items:center;justify-content:center;border-radius:50%;flex-shrink:0}
 .section-title h2{font-family:'KaiTi',serif;font-size:26px;color:var(--ink);letter-spacing:3px;font-weight:400}
 .section-title .line{flex:1;height:1px;background:linear-gradient(90deg,var(--border-strong),transparent)}
+.meta-bar{display:flex;flex-wrap:wrap;justify-content:center;gap:12px 24px;padding:14px 20px;background:var(--paper-light);border:1px solid var(--border);border-left:3px solid var(--gold);border-radius:6px;margin-bottom:16px}
+.meta-item{display:inline-flex;align-items:baseline;gap:7px}
+.meta-k{font-size:12.5px;color:var(--ink-fade);letter-spacing:2px}
+.meta-v{font-size:15.5px;color:var(--ink);font-weight:600}
+.meta-v.accent{color:var(--vermilion)}
 .hex-display{display:flex;align-items:center;justify-content:center;gap:24px;padding:30px 16px;
   background:var(--paper-light);border:1px solid var(--border);border-radius:6px;margin-bottom:24px;overflow-x:auto}
 .hex-block{text-align:center}
@@ -296,6 +301,27 @@ def render_gua_tags(board):
     return f'<div class="gua-tags">{html}</div>'
 
 
+def render_meta_bar(board):
+    """大图上方的全局信息条：月建/日辰/旬空/用神。
+
+    世应、动爻、空亡之爻、化退、入墓等已并入大图每爻标注，此处只留全局参数。
+    """
+    items = [
+        ("月建", f"{board.month_zhi}·{board.month_wx}", False),
+        ("日辰", f"{board.day_gz}·{board.day_wx}", False),
+        ("旬空", "、".join(board.xunkong), False),
+    ]
+    if board.yongshen_qin and board.yongshen_lines:
+        ys = board.yongshen_lines[0]
+        items.append(("用神", f"{board.yongshen_qin}（{yao_name(ys.position, ys.yin_yang)}·{ys.gan}{ys.zhi}）", True))
+    html = "".join(
+        f'<span class="meta-item"><span class="meta-k">{esc(k)}</span>'
+        f'<span class="meta-v{" accent" if acc else ""}">{esc(v)}</span></span>'
+        for k, v, acc in items
+    )
+    return f'<div class="meta-bar">{html}</div>'
+
+
 def render_overview(overview):
     """渲染卦象总览的卦辞/爻辞 + 卦象/动爻 LLM 推演讲解。"""
     if not overview:
@@ -382,8 +408,8 @@ def generate_html(case, board):
 
 <div class="section">
   <div class="section-title"><div class="num">壹</div><h2>卦象總覽</h2><div class="line"></div></div>
+  {render_meta_bar(board)}
   {render_hex_diagram(board)}
-  {render_params(board)}
   {render_overview(case.get("overview"))}
 </div>
 
