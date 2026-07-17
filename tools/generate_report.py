@@ -63,12 +63,13 @@ body{
 .gua-name{font-family:'KaiTi',serif;font-size:24px;color:var(--ink);margin-bottom:6px;letter-spacing:2px}
 .gua-tag{font-size:12px;color:var(--ink-fade);margin-bottom:16px;letter-spacing:2px}
 .hex-lines{display:flex;flex-direction:column;gap:9px;align-items:center}
-.yao{display:flex;align-items:center;gap:8px;width:160px}
-.yao .pos{font-size:11px;color:var(--ink-fade);width:28px;text-align:right}
-.yao .bars{width:120px;display:flex;justify-content:space-between;align-items:center;height:9px}
+.yao{display:flex;align-items:center;gap:10px;width:268px}
+.yao .pos{font-size:11px;color:var(--ink-fade);width:30px;text-align:right;flex-shrink:0}
+.yao .bars{width:90px;display:flex;justify-content:space-between;align-items:center;height:9px;flex-shrink:0}
 .yao .bars .b{height:9px;background:var(--ink);border-radius:1px}
-.yao .bars.solid .b{width:120px}
-.yao .bars.split .b{width:54px}
+.yao .bars.solid .b{width:90px}
+.yao .bars.split .b{width:40px}
+.yinfo{font-size:11.5px;color:var(--ink-soft);letter-spacing:.5px;white-space:nowrap}
 .yao.moving .b{background:var(--vermilion);box-shadow:0 0 8px rgba(158,43,37,.4)}
 .yao.moving .pos{color:var(--vermilion);font-weight:600}
 .arrow{font-size:34px;color:var(--gold)}
@@ -141,23 +142,55 @@ def render_yao_bars(yin_yang, moving=False):
 
 
 def render_hex_diagram(board):
-    """主卦 → 变卦 的大图。"""
-    def block(title, tag, yin_yangs, moving_set):
+    """主卦 → 变卦 大图。每爻含 爻位/阴阳爻/六神·六亲·纳甲，卦名附六合/六冲标注。
+
+    主卦、变卦同爻左右并排，一行即可横向对比变化。
+    """
+    def suffix(is_he, is_chong):
+        if is_he:
+            return "（六合卦）"
+        if is_chong:
+            return "（六冲卦）"
+        return ""
+
+    def block(title, tag, yin_yangs, moving_set, info_of):
         rows = []
         for pos in range(6, 0, -1):
             yy = yin_yangs[pos - 1]
             mv = pos in moving_set
             pos_label = yao_name(pos, yy)
-            row = render_yao_bars(yy, mv).replace("{pos}", f'<span class="pos">{esc(pos_label)}</span>')
-            rows.append(row)
-        return f'<div class="hex-block"><div class="gua-name">{esc(title)}</div><div class="gua-tag">{esc(tag)}</div><div class="hex-lines">{"".join(rows)}</div></div>'
+            bars = ('<div class="bars solid"><span class="b"></span></div>' if yy == "阳"
+                    else '<div class="bars split"><span class="b"></span><span class="b"></span></div>')
+            yao_cls = "yao moving" if mv else "yao"
+            info = info_of(pos)
+            info_html = (f'<span class="yinfo">{esc(info["shen"])} · {esc(info["qin"])} · '
+                         f'{esc(info["gan"])}{esc(info["zhi"])}</span>')
+            rows.append(
+                f'<div class="{yao_cls}"><span class="pos">{esc(pos_label)}</span>'
+                f'{bars}{info_html}</div>'
+            )
+        return (f'<div class="hex-block"><div class="gua-name">{esc(title)}</div>'
+                f'<div class="gua-tag">{esc(tag)}</div>'
+                f'<div class="hex-lines">{"".join(rows)}</div></div>')
 
     yin_yangs = [ln.yin_yang for ln in board.lines]
     moving_set = {ln.position for ln in board.moving_lines}
     changed_yy = [("阴" if yy == "阳" else "阳") if (i + 1) in moving_set else yy
                   for i, yy in enumerate(yin_yangs)]
-    left = block(board.hexagram, "主卦", yin_yangs, moving_set)
-    right = block(board.changed_hexagram or "變卦", "變卦", changed_yy, moving_set)
+
+    def main_info(pos):
+        ln = board.line(pos)
+        return {"shen": ln.shen, "qin": ln.qin, "gan": ln.gan, "zhi": ln.zhi}
+
+    ch = board.changed_line_info()
+    def changed_info(pos):
+        c = ch[pos - 1]
+        return {"shen": c["shen"], "qin": c["qin"], "gan": c["gan"], "zhi": c["zhi"]}
+
+    left_title = board.hexagram + suffix(board.is_liuhe_gua, board.is_liuchong_gua)
+    right_title = (board.changed_hexagram or "變卦") + suffix(board.changed_is_liuhe, board.changed_is_liuchong)
+    left = block(left_title, "主卦", yin_yangs, moving_set, main_info)
+    right = block(right_title, "變卦", changed_yy, moving_set, changed_info)
     return f'<div class="hex-display">{left}<div class="arrow">➜</div>{right}</div>'
 
 

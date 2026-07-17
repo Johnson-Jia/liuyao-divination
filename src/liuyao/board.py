@@ -274,6 +274,8 @@ class Board:
         self.is_liuchong_gua = False        # 主卦六冲卦
         self.changed_is_liuhe = False       # 变卦六合卦
         self.changed_is_liuchong = False    # 变卦六冲卦
+        self.changed_lower_gua = None       # 变卦下卦名
+        self.changed_upper_gua = None       # 变卦上卦名
 
     def line(self, pos):
         return self.lines[pos - 1]
@@ -281,6 +283,32 @@ class Board:
     @property
     def moving_lines(self):
         return [l for l in self.lines if l.is_moving]
+
+    def changed_line_info(self):
+        """变卦六爻完整信息（初..上）：[{pos,yin_yang,gan,zhi,qin,shen}]。
+
+        纳甲/六亲按变卦本身排（六亲仍以主卦宫为我）；六神同主卦同位置（日干起，按爻位）。
+        """
+        lower_gan = BAGUA_NAGAN[self.changed_lower_gua][0]
+        upper_gan = BAGUA_NAGAN[self.changed_upper_gua][1]
+        lower_zhi = BAGUA_NAZHI[self.changed_lower_gua][:3]
+        upper_zhi = BAGUA_NAZHI[self.changed_upper_gua][3:]
+        info = []
+        for pos in range(1, 7):
+            ln = self.line(pos)
+            yy = ("阴" if ln.yin_yang == "阳" else "阳") if ln.is_moving else ln.yin_yang
+            if pos <= 3:
+                gan, zhi = lower_gan, lower_zhi[pos - 1]
+            else:
+                gan, zhi = upper_gan, upper_zhi[pos - 4]
+            wx = DIZHI_WUXING[zhi]
+            info.append({
+                "pos": pos, "yin_yang": yy,
+                "gan": gan, "zhi": zhi,
+                "qin": liuqin(wx, self.palace_wx),
+                "shen": ln.shen,
+            })
+        return info
 
 
 def cast_board(hexagram, moving, month_zhi, day_gz, yongshen_qin=None):
@@ -330,6 +358,8 @@ def cast_board(hexagram, moving, month_zhi, day_gz, yongshen_qin=None):
     changed_lower_gua = _yao_to_bagua(changed_yao[0:3])
     changed_upper_gua = _yao_to_bagua(changed_yao[3:6])
     board.changed_hexagram = _find_changed_hexagram(changed_lower_gua, changed_upper_gua)
+    board.changed_lower_gua = changed_lower_gua
+    board.changed_upper_gua = changed_upper_gua
 
     # 六神起例
     start_shen = LIUSHEN_START[board.day_gan]
