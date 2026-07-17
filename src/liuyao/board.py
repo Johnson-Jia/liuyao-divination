@@ -7,7 +7,7 @@ cast_board(...) 返回 Board 对象，含六爻的全部信息：
 from .data import (
     BAGUA, BAGUA_NAGAN, BAGUA_NAZHI, DIZHI_WUXING, WUXING_MU,
     JINSHEN, TUISHEN, LIUSHEN_ORDER, LIUSHEN_START, find_hexagram, HEXAGRAMS,
-    CHONG,
+    CHONG, LIUHE,
 )
 
 # 三合局：三支 + 化出五行
@@ -151,6 +151,24 @@ def _detect_sanhe(board):
     board.sanhe = result
 
 
+def _detect_liuhe_liuchong(board, ch_lower, ch_upper):
+    """检测六合卦/六冲卦（《增删卜易·六合章/六冲章》）。
+
+    六合卦：初四、二五、三上 三对皆地支六合；六冲卦：三对皆六冲。主卦、变卦各检测。
+    """
+    pairs = [(0, 3), (1, 4), (2, 5)]  # 初四 / 二五 / 三上（0 基）
+
+    def check(zhi6):
+        he = all(LIUHE[zhi6[a]] == zhi6[b] for a, b in pairs)
+        ch = all(CHONG[zhi6[a]] == zhi6[b] for a, b in pairs)
+        return he, ch
+
+    main = [l.zhi for l in board.lines]
+    board.is_liuhe_gua, board.is_liuchong_gua = check(main)
+    ch6 = BAGUA_NAZHI[ch_lower][:3] + BAGUA_NAZHI[ch_upper][3:]
+    board.changed_is_liuhe, board.changed_is_liuchong = check(ch6)
+
+
 class Line:
     """单爻信息。"""
 
@@ -252,6 +270,10 @@ class Board:
         self.fu_yin = False                 # 伏吟
         self.fan_yin = False                # 反吟
         self.sanhe = {}                     # 三合局检测结果
+        self.is_liuhe_gua = False           # 主卦六合卦
+        self.is_liuchong_gua = False        # 主卦六冲卦
+        self.changed_is_liuhe = False       # 变卦六合卦
+        self.changed_is_liuchong = False    # 变卦六冲卦
 
     def line(self, pos):
         return self.lines[pos - 1]
@@ -437,9 +459,10 @@ def cast_board(hexagram, moving, month_zhi, day_gz, yongshen_qin=None):
                 ln.effective = eff
                 ln.effective_reason = reason
 
-    # —— 卦级分析：卦变生克 / 反伏 / 三合 ——
+    # —— 卦级分析：卦变生克 / 反伏 / 三合 / 六合六冲卦 ——
     _analyze_gua_bian(board)
     _detect_fu_fan_yin(board)
     _detect_sanhe(board)
+    _detect_liuhe_liuchong(board, changed_lower_gua, changed_upper_gua)
 
     return board

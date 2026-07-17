@@ -102,6 +102,8 @@ body{
 .ci-label{font-size:13px;color:var(--ink-fade);margin-bottom:5px;letter-spacing:1px}
 .ci-text{font-family:'KaiTi','STKaiti',serif;font-size:17px;color:var(--ink);margin-bottom:6px;letter-spacing:1px;line-height:1.7}
 .ci-note{font-size:13.5px;color:var(--ink-soft);line-height:1.85}
+.gua-tags{text-align:center;margin:-6px 0 20px}
+.gua-tags .tag{font-size:13px;padding:3px 10px}
 .mini-table{width:100%;border-collapse:collapse;margin:10px 0;font-size:14px}
 .mini-table td{padding:8px 10px;border-bottom:1px dashed var(--border);vertical-align:top}
 .mini-table td:first-child{color:var(--vermilion);font-weight:600;white-space:nowrap}
@@ -220,6 +222,29 @@ def render_params(board):
     return f'<div class="params">{"".join(items)}</div>'
 
 
+def render_gua_tags(board):
+    """卦级特征标签条（附在卦象图下）：六合卦/六冲卦/反伏/卦变生克。"""
+    tags = []
+    if board.is_liuhe_gua:
+        tags.append(("主卦·六合卦", "tag-jade"))
+    if board.is_liuchong_gua:
+        tags.append(("主卦·六冲卦", "tag-red"))
+    if board.changed_is_liuhe:
+        tags.append(("变卦·六合卦", "tag-jade"))
+    if board.changed_is_liuchong:
+        tags.append(("变卦·六冲卦", "tag-red"))
+    if board.fu_yin:
+        tags.append(("伏吟", "tag-gold"))
+    if board.fan_yin:
+        tags.append(("反吟", "tag-gold"))
+    if board.gua_bian and board.gua_bian != "变卦未明":
+        tags.append((board.gua_bian, "tag-gold"))
+    if not tags:
+        return ""
+    html = "".join(f'<span class="tag {c}">{esc(t)}</span>' for t, c in tags)
+    return f'<div class="gua-tags">{html}</div>'
+
+
 def render_overview(overview):
     """渲染卦象总览的卦辞/爻辞 + 卦象/动爻 LLM 推演讲解。"""
     if not overview:
@@ -307,9 +332,10 @@ def generate_html(case, board):
 <div class="section">
   <div class="section-title"><div class="num">壹</div><h2>卦象總覽</h2><div class="line"></div></div>
   {render_hex_diagram(board)}
-  {render_overview(case.get("overview"))}
-  {render_params(board)}
+  {render_gua_tags(board)}
   {render_board_table(board)}
+  {render_params(board)}
+  {render_overview(case.get("overview"))}
 </div>
 
 <div class="section">
