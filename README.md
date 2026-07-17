@@ -47,7 +47,9 @@ liuyao-divination/
 │   ├── generate_report.py             # HTML report generator
 │   └── extract_panji.py               # extract 64-hexagram verdicts
 ├── examples/                          # validated case library (JSON)
-└── tests/                             # golden-case tests (the canonical reading)
+├── tests/                             # golden-case tests (the canonical reading)
+├── data/zhouyi.json                   # 64 卦辞 + 385 爻辞 (public-domain text)
+└── docs/易经六十四卦.md              # full source ms (with 64 hexagram images)
 ```
 
 ## 🚀 Quick start

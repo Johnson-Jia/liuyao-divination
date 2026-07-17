@@ -47,7 +47,9 @@ liuyao-divination/
 │   ├── generate_report.py             # HTML 报告生成器
 │   └── extract_panji.py               # 提炼 64 卦判辞
 ├── examples/                          # 已验证的卦例库（JSON）
-└── tests/                             # 黄金用例测试（经典卦例）
+├── tests/                             # 黄金用例测试（经典卦例）
+├── data/zhouyi.json                   # 64 卦辞 + 385 爻辞（公有领域原文）
+└── docs/易经六十四卦.md              # 完整源稿（含 64 卦象图）
 ```
 
 ## 🚀 快速开始
