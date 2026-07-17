@@ -57,21 +57,24 @@ body{
   font-size:18px;display:flex;align-items:center;justify-content:center;border-radius:50%;flex-shrink:0}
 .section-title h2{font-family:'KaiTi',serif;font-size:26px;color:var(--ink);letter-spacing:3px;font-weight:400}
 .section-title .line{flex:1;height:1px;background:linear-gradient(90deg,var(--border-strong),transparent)}
-.hex-display{display:flex;align-items:center;justify-content:center;gap:40px;padding:30px 20px;
-  background:var(--paper-light);border:1px solid var(--border);border-radius:6px;margin-bottom:24px;flex-wrap:wrap}
+.hex-display{display:flex;align-items:center;justify-content:center;gap:24px;padding:30px 16px;
+  background:var(--paper-light);border:1px solid var(--border);border-radius:6px;margin-bottom:24px;overflow-x:auto}
 .hex-block{text-align:center}
+.hex-mid{display:flex;flex-direction:column;align-items:center;gap:8px;flex-shrink:0;max-width:100px}
+.hex-mid .gua-tags{margin:0;text-align:center}
+.hex-mid .gua-tags .tag{display:block;margin:3px 0;font-size:11px;letter-spacing:1px}
 .gua-name{font-family:'KaiTi',serif;font-size:24px;color:var(--ink);margin-bottom:6px;letter-spacing:2px}
 .gua-tag{font-size:12px;color:var(--ink-fade);margin-bottom:16px;letter-spacing:2px}
 .hex-lines{display:flex;flex-direction:column;gap:9px;align-items:center}
-.yao{display:flex;align-items:center;gap:7px;width:392px;min-height:26px}
-.yao .yleft{font-size:11px;color:var(--ink-soft);width:74px;text-align:right;flex-shrink:0;white-space:nowrap}
-.yao .pos{font-size:11px;color:var(--ink-fade);width:26px;text-align:center;flex-shrink:0}
-.yao .bars{width:66px;display:flex;justify-content:space-between;align-items:center;height:9px;flex-shrink:0}
+.yao{display:flex;align-items:center;gap:6px;width:356px;min-height:26px}
+.yao .yleft{font-size:11px;color:var(--ink-soft);width:68px;text-align:right;flex-shrink:0;white-space:nowrap}
+.yao .pos{font-size:11px;color:var(--ink-fade);width:24px;text-align:center;flex-shrink:0}
+.yao .bars{width:60px;display:flex;justify-content:space-between;align-items:center;height:9px;flex-shrink:0}
 .yao .bars .b{height:9px;background:var(--ink);border-radius:1px}
-.yao .bars.solid .b{width:66px}
-.yao .bars.split .b{width:30px}
-.yao .yright{font-size:12px;color:var(--ink);width:40px;flex-shrink:0;white-space:nowrap;font-weight:600}
-.yao .ytags{width:150px;display:flex;flex-wrap:wrap;gap:2px;align-items:center}
+.yao .bars.solid .b{width:60px}
+.yao .bars.split .b{width:28px}
+.yao .yright{font-size:12px;color:var(--ink);width:38px;flex-shrink:0;white-space:nowrap;font-weight:600}
+.yao .ytags{width:132px;display:flex;flex-wrap:wrap;gap:2px;align-items:center}
 .yao .ytag{font-size:9.5px;padding:1px 4px;border-radius:2px;background:rgba(158,43,37,.1);color:var(--vermilion);white-space:nowrap;line-height:1.4}
 .yao.moving .b{background:var(--vermilion);box-shadow:0 0 8px rgba(158,43,37,.4)}
 .yao.moving .pos{color:var(--vermilion);font-weight:600}
@@ -199,7 +202,8 @@ def render_hex_diagram(board):
     right_title = (board.changed_hexagram or "變卦") + suffix(board.changed_is_liuhe, board.changed_is_liuchong)
     left = block(left_title, "主卦", yin_yangs, moving_set, main_info)
     right = block(right_title, "變卦", changed_yy, moving_set, changed_info)
-    return f'<div class="hex-display">{left}<div class="arrow">➜</div>{right}</div>'
+    mid = f'<div class="hex-mid"><div class="arrow">➜</div>{render_gua_tags(board)}</div>'
+    return f'<div class="hex-display">{left}{mid}{right}</div>'
 
 
 def render_board_table(board):
@@ -373,7 +377,6 @@ def generate_html(case, board):
 <div class="section">
   <div class="section-title"><div class="num">壹</div><h2>卦象總覽</h2><div class="line"></div></div>
   {render_hex_diagram(board)}
-  {render_gua_tags(board)}
   {render_params(board)}
   {render_overview(case.get("overview"))}
 </div>
