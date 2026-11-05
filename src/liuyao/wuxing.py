@@ -119,12 +119,16 @@ def is_true_void(yao_wx, month_zhi):
 # 旺相休囚死（按月令当令五行）
 # ----------------------------------------------------------------
 def wuxing_state(yao_wx, ling_wx):
-    """爻五行在当令五行(月令)下的状态：旺/相/休/囚/死。"""
+    """爻五行在当令五行(月令)下的状态：旺/相/休/囚/死。
+
+    当令者旺，令所生者相(次旺)，生令者休(泄气)，克令者囚，令所克者死。
+    例：未月土令 → 土旺、金相(土生金)、火休(火生土)、木囚、水死。
+    """
     if yao_wx == ling_wx:
         return "旺"
-    if sheng_me(ling_wx) == yao_wx:   # 生令者 = 相
+    if i_sheng(ling_wx) == yao_wx:    # 令生者 = 相（当令所生，次旺）
         return "相"
-    if i_sheng(ling_wx) == yao_wx:    # 令生者 = 休
+    if sheng_me(ling_wx) == yao_wx:   # 生令者 = 休（生当令而泄气）
         return "休"
     if ke_me(ling_wx) == yao_wx:      # 克令者 = 囚
         return "囚"
