@@ -28,7 +28,7 @@ Manual casting is where most readings go wrong — a mis-assigned palace, a miss
 ```
 liuyao-divination/
 ├── skill/liuyao-divination/SKILL.md   # The agent skill (start here)
-├── references/                        # 11 methodology monographs (Chinese)
+├── references/                        # 13 methodology monographs (Chinese)
 │   ├── 01-装卦排盘.md                  #   casting & assignment
 │   ├── 02-用神取用.md                  #   selecting the Significant Line
 │   ├── 03-旺衰月日.md                  #   strength via month & day
