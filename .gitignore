@@ -34,3 +34,6 @@ desktop.ini
 # Project artifacts
 outputs/
 *.log
+
+# 私人卦例与应验记录（含真实姓名/地点，仅本地留存，永不提交）
+private/
