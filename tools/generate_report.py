@@ -189,6 +189,25 @@ body{
 .summary h3{font-family:'KaiTi',serif;font-size:24px;color:var(--vermilion);margin-bottom:12px;letter-spacing:2px}
 .summary p{color:var(--ink);font-size:17.5px;line-height:2}
 .notice{text-align:center;font-size:14.5px;color:var(--ink-fade);border-top:1px dashed var(--border);padding-top:22px;margin-top:30px;line-height:1.9}
+/* 应验纪实 · 应期追踪 */
+.timeline{margin:4px 0 2px}
+.tl-item{position:relative;padding:0 0 14px 24px;border-left:2px solid var(--border-strong);margin-left:8px}
+.tl-item:last-child{border-left-color:transparent;padding-bottom:2px}
+.tl-item::before{content:"";position:absolute;left:-7px;top:7px;width:11px;height:11px;border-radius:50%;background:var(--vermilion);box-shadow:0 0 0 2px var(--paper-light),0 0 0 3.5px rgba(158,43,37,.35)}
+.tl-item .tl-date{font-weight:600;color:var(--vermilion);font-size:15px;letter-spacing:.5px}
+.tl-item .tl-event{color:var(--ink-soft);font-size:15px;line-height:1.75}
+.vmap-table{width:100%;border-collapse:collapse;margin:12px 0 4px;font-size:14px}
+.vmap-table th{background:var(--ink);color:var(--paper-light);padding:9px 10px;font-size:12.5px;letter-spacing:2px;font-weight:600}
+.vmap-table td{padding:10px 10px;border-bottom:1px dashed var(--border);vertical-align:top;text-align:left;line-height:1.7}
+.vmap-table tr:last-child td{border-bottom:none}
+.vmap-table td.xs{color:var(--ink);font-weight:600;width:34%}
+.vmap-table td.fx{color:var(--ink-soft)}
+.vmap-table td.gd{white-space:nowrap}
+.badge{display:inline-block;font-size:11.5px;padding:2px 9px;border-radius:10px;letter-spacing:1px;white-space:nowrap;font-weight:600}
+.badge-strong{background:rgba(79,111,87,.15);color:var(--jade);border:1px solid rgba(79,111,87,.45)}
+.badge-medium{background:rgba(168,124,42,.14);color:var(--gold);border:1px solid rgba(168,124,42,.5)}
+.badge-wait{background:rgba(79,111,87,.1);color:var(--jade);border:1px dashed rgba(79,111,87,.5)}
+.badge-warn{background:rgba(158,43,37,.13);color:var(--vermilion);border:1px solid rgba(158,43,37,.45)}
 .footer{text-align:center;margin-top:30px;font-size:12px;color:var(--ink-fade);letter-spacing:2px}
 .footer .orn{color:var(--gold);margin:0 8px}
 @keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
@@ -443,11 +462,91 @@ def render_verdict(verdict):
     return f'<div class="verdict"><div class="verdict-title">断　曰</div><div class="verdict-body">{paras}</div></div>'
 
 
+def _grade_badge(grade):
+    if any(k in grade for k in ("事前", "强", "已验")):
+        return "badge-strong"
+    return "badge-medium"
+
+
+def render_verification(ver):
+    """应验纪实：事实时间线 + 逐象对应表（带证据分级徽章）。
+
+    JSON 格式（可选，旧案例无此字段则整节不渲染）：
+      "verification": {
+        "subtitle": "……",
+        "timeline":  [{"date": "…", "event": "…"}],
+        "mappings":  [{"xiang": "卦象", "fact": "事实", "grade": "事前断语·已验|事后对账"}],
+        "notes": ["……"]
+      }
+    """
+    out = []
+    tl = "".join(
+        f'<div class="tl-item"><div class="tl-date">{esc(t["date"])}</div>'
+        f'<div class="tl-event">{link_terms(esc(t["event"]))}</div></div>'
+        for t in ver.get("timeline", [])
+    )
+    if tl:
+        out.append(f'<div class="card"><div class="ct">事实时间线</div><div class="timeline">{tl}</div></div>')
+
+    rows = "".join(
+        f'<tr><td class="xs">{link_terms(esc(m["xiang"]))}</td>'
+        f'<td class="fx">{esc(m["fact"])}</td>'
+        f'<td class="gd"><span class="badge {_grade_badge(m.get("grade", ""))}">{esc(m.get("grade", ""))}</span></td></tr>'
+        for m in ver.get("mappings", [])
+    )
+    if rows:
+        sub = f'<div class="cs">{esc(ver.get("subtitle", ""))}</div>' if ver.get("subtitle") else ""
+        notes = "".join(f'<p>{link_terms(esc(n))}</p>' for n in ver.get("notes", []))
+        out.append(
+            f'<div class="card"><div class="ct">逐象对应</div>{sub}'
+            f'<table class="vmap-table"><thead><tr><th>卦象</th><th>事实</th><th>证据分级</th></tr></thead>'
+            f'<tbody>{rows}</tbody></table>{notes}</div>'
+        )
+    return "".join(out)
+
+
+def render_outlook(items):
+    """应期追踪：时间窗 / 卦理预期 / 状态（待验·警示 徽章）。
+
+    JSON 格式（可选）："outlook": [{"window": "…", "expect": "…", "status": "待验|警示"}]
+    """
+    rows = "".join(
+        f'<tr><td class="xs">{esc(it["window"])}</td>'
+        f'<td class="fx">{link_terms(esc(it["expect"]))}</td>'
+        f'<td class="gd"><span class="badge {"badge-warn" if it.get("status") == "警示" else "badge-wait"}">'
+        f'{esc(it.get("status", "待验"))}</span></td></tr>'
+        for it in items
+    )
+    if not rows:
+        return ""
+    return (f'<div class="card"><div class="ct">应期追踪</div>'
+            f'<table class="vmap-table"><thead><tr><th>时间窗</th><th>卦理预期</th><th>状态</th></tr></thead>'
+            f'<tbody>{rows}</tbody></table></div>')
+
+
 def generate_html(case, board):
     m = case["meta"]
     header_meta = (f'{esc(m["year"])}年 · {esc(m["month"])}月 · '
                    f'<span class="accent">{esc(m["day"])}日</span>'
                    f'　｜　{esc(m["question"])}')
+
+    # 各节内容 + 动态编号（有 verification / outlook 时顺延为 肆 / 伍）
+    secs = [
+        ("卦象总览",
+         render_meta_bar(board) + render_hex_diagram(board) + render_overview(case.get("overview"))),
+        ("分层解析", render_sections(case["sections"])),
+        ("整体推演 · 断语", render_verdict(case["verdict"])),
+    ]
+    if case.get("verification"):
+        secs.append(("应验纪实", render_verification(case["verification"])))
+    if case.get("outlook"):
+        secs.append(("应期追踪", render_outlook(case["outlook"])))
+    nums = ["壹", "贰", "叁", "肆", "伍", "陆"]
+    sections_html = "".join(
+        f'<div class="section"><div class="section-title"><div class="num">{nums[i]}</div>'
+        f'<h2>{esc(t)}</h2><div class="line"></div></div>{body}</div>'
+        for i, (t, body) in enumerate(secs)
+    )
 
     return f"""<!DOCTYPE html>
 <html lang="zh-CN"><head><meta charset="UTF-8">
@@ -464,22 +563,7 @@ def generate_html(case, board):
   <div class="header-meta">{header_meta}</div>
 </header>
 
-<div class="section">
-  <div class="section-title"><div class="num">壹</div><h2>卦象总览</h2><div class="line"></div></div>
-  {render_meta_bar(board)}
-  {render_hex_diagram(board)}
-  {render_overview(case.get("overview"))}
-</div>
-
-<div class="section">
-  <div class="section-title"><div class="num">贰</div><h2>分层解析</h2><div class="line"></div></div>
-  {render_sections(case['sections'])}
-</div>
-
-<div class="section">
-  <div class="section-title"><div class="num">叁</div><h2>整体推演 · 断语</h2><div class="line"></div></div>
-  {render_verdict(case['verdict'])}
-</div>
+{sections_html}
 
 <div class="summary">
   <h3>一语总括</h3>
